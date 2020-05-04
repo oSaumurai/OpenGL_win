@@ -39,7 +39,7 @@ static ShaderProgramSource ParseShader(const std::string& filepath)
     
     return { ss[0].str(),ss[1].str() };
 }
-
+ 
 static unsigned int CompileShader(unsigned int type, const std::string& source)
 {
     unsigned int id= glCreateShader(type);
