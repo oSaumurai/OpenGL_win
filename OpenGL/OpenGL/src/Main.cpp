@@ -1,6 +1,7 @@
 #include <GL/glew.h>
 #include <GLFW/glfw3.h>
 #include "Renderer.h"
+#include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
 #include "Shader.h"
@@ -49,14 +50,13 @@ int main(void)
             2, 3, 0
         };
         /*vertex array object*/
-        unsigned int vao;
-        GLCall(glGenVertexArrays(1, &vao));
-        GLCall(glBindVertexArray(vao));
-
+        VertexArray va;
         /*vertex buffer*/
         VertexBuffer vb(positions, 4 * 2 * sizeof(float));
-        glEnableVertexAttribArray(0);
-        glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, 0);
+
+        VertexBufferLayout layout;
+        layout.Push<float>(2);
+        va.AddBuffer(vb, layout);
 
         /*index buffer*/
         IndexBuffer ib(indices, 6);
@@ -75,8 +75,8 @@ int main(void)
             glClear(GL_COLOR_BUFFER_BIT);
             shader.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
             GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
-
-            ib.Bind();
+            //va.Bind();
+            //ib.Bind();
 
             if (r > 1.0f)
                 increment = -0.05f;
