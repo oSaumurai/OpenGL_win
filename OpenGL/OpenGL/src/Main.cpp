@@ -4,7 +4,9 @@
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "IndexBuffer.h"
+#include "VertexBufferLayout.h"
 #include "Shader.h"
+#include "Texture.h"
 
 #include <iostream>
 #include <fstream>
@@ -18,6 +20,8 @@ int main(void)
     /* Initialize the library */
     if (!glfwInit())
         return -1;
+
+    /* Choose the OpenGL version and Core File*/
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE,GLFW_OPENGL_CORE_PROFILE);
@@ -40,21 +44,25 @@ int main(void)
     std::cout << glGetString(GL_VERSION) << std::endl;
     {
         float positions[] = {
-            -0.5f, -0.5f,
-             0.5f, -0.5f,
-             0.5f,  0.5f,
-            -0.5f,  0.5f
+            -0.5f, -0.5f, 0.0f, 0.0f,
+             0.5f, -0.5f, 1.0f, 0.0f,
+             0.5f,  0.5f, 1.0f, 1.0f,
+            -0.5f,  0.5f, 0.0f, 1.0f
         };
         unsigned int indices[] = {
             0, 1, 2,
             2, 3, 0
         };
-        /*vertex array object*/
+
+        GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
+        GLCall(glEnable(GL_BLEND));
+        /*vertex array object*/ 
         VertexArray va;
         /*vertex buffer*/
-        VertexBuffer vb(positions, 4 * 2 * sizeof(float));
+        VertexBuffer vb(positions, 4 * 4 * sizeof(float));
 
         VertexBufferLayout layout;
+        layout.Push<float>(2);
         layout.Push<float>(2);
         va.AddBuffer(vb, layout);
 
@@ -64,7 +72,19 @@ int main(void)
         /*shader setup*/
         Shader shader("res/shader/Basic.shader");
         shader.Bind();
-        shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
+        //shader.SetUniform4f("u_Color", 0.8f, 0.3f, 0.8f, 1.0f);
+
+        /*texture*/
+        Texture texture("res/textures/alice.png");
+        texture.Bind();
+        shader.SetUniform1i("u_Texture", 0);
+
+        Renderer renderer;
+
+        //va.UnBind();
+        //ib.UnBind();
+        //vb.UnBind();
+        //shader.UnBind();
 
         float r = 0.0f;
         float increment = 0.05f;
@@ -73,10 +93,8 @@ int main(void)
         {
             /* Render here */
             glClear(GL_COLOR_BUFFER_BIT);
-            shader.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
-            GLCall(glDrawElements(GL_TRIANGLES, 6, GL_UNSIGNED_INT, nullptr));
-            //va.Bind();
-            //ib.Bind();
+            //shader.SetUniform4f("u_Color", r, 0.3f, 0.8f, 1.0f);
+            renderer.Draw(va, ib, shader);
 
             if (r > 1.0f)
                 increment = -0.05f;
