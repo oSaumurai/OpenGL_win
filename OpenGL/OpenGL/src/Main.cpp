@@ -20,6 +20,8 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 
+#include "tests/TestClearColor.h"
+
 int main(void)
 {
     GLFWwindow* window;
@@ -101,34 +103,41 @@ int main(void)
         ImGui_ImplOpenGL3_Init((char*)glGetString(GL_NUM_SHADING_LANGUAGE_VERSIONS));
         glGetError();
 
-        bool show_demo_window = true;
-        bool show_another_window = false;
-        ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
+        test::Test* currentTest = nullptr;
+        test::TestMenu* testMenu = new test::TestMenu(currentTest);
+        currentTest = testMenu;
+
+        testMenu->RegisterTest<test::TestClearColor>("Clear olor");
+
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
             /* Render here */
-            
-            glClear(GL_COLOR_BUFFER_BIT);
-
-            glm::mat4 model = glm::translate(glm::mat4(1.0f), translation);
-            glm::mat4 mvp = proj * view * model;
-            shader.SetUniformMat4f("u_MVP", mvp);
-            renderer.Draw(va, ib, shader);
+            glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
+            renderer.Clear();
 
             //New Frame
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
-            //glGetError();
-            if (show_demo_window)
-                ImGui::ShowDemoWindow(&show_demo_window);
+            if (currentTest)
+            {
+                currentTest->OnUpdate(0.0f);
+                currentTest->OnRender();
+                ImGui::Begin("Test");
+                if (currentTest != testMenu && ImGui::Button("<-"))
+                {
+                    delete currentTest;
+                    currentTest = testMenu;
+                }
+                currentTest->OnImGuiRender();
+                ImGui::End();
+            }
 
             // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
             {
                 ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
                 ImGui::SliderFloat3("Translation a", &translation.x, 0.0f, 960.0f);
-                ImGui::SliderFloat3("Translation b", &translationb.x, 0.0f, 960.0f);
                 ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
                 ImGui::End();
             }
@@ -136,10 +145,11 @@ int main(void)
             // Rendering
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-            {
-                
-                //renderer.Draw(va, ib, shader);
-            }
+
+            glm::mat4 model = glm::translate(glm::mat4(1.0f), translation);
+            glm::mat4 mvp = proj * view * model;
+            shader.SetUniformMat4f("u_MVP", mvp);
+            renderer.Draw(va, ib, shader);
             /* Swap front and back buffers */            
             /* Poll for and process events */
             glfwSwapBuffers(window);
@@ -148,6 +158,10 @@ int main(void)
         //No need because the destructor of shader.cpp will destroy it
         //glDeleteProgram(shader);
     }
+    ImGui_ImplOpenGL3_Shutdown();
+    ImGui_ImplGlfw_Shutdown();
+
+    ImGui::DestroyContext();
     glfwTerminate();
     return 0;
 }
