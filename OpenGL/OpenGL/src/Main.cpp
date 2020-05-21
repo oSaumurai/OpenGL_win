@@ -77,22 +77,20 @@ int main(void)
                
         /*index buffer*/
         IndexBuffer ib(indices, 6);
-
-        glm::mat4 proj = glm::ortho(0.0f, 500.0f, 0.0f, 500.0f, -50.0f, 50.0f);
-        glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(-50, 0, 0));
+        ib.Bind();
+        glm::mat4 proj = glm::ortho(0.0f, 800.0f, 0.0f, 800.0f, -50.0f, 50.0f);
+        glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
         /*shader setup*/
+        glm::vec3 translation(0, -50, 0);
+        glm::vec3 translationb(0, 200, 0);
         Shader shader("res/shader/Basic.shader");
         shader.Bind();
-        
+
         /*texture*/
         Texture texture("res/textures/alice.png");
         texture.Bind();
         shader.SetUniform1i("u_Texture", 0);
 
-        //va.UnBind();
-        //vb.UnBind();
-        //ib.UnBind();
-        //shader.UnBind();
         Renderer renderer;
 
         IMGUI_CHECKVERSION();
@@ -101,11 +99,8 @@ int main(void)
         ImGui::StyleColorsDark();
         ImGui_ImplGlfw_InitForOpenGL(window, true);
         ImGui_ImplOpenGL3_Init((char*)glGetString(GL_NUM_SHADING_LANGUAGE_VERSIONS));
+        glGetError();
 
-        float r = 0.0f;
-        float increment = 0.05f;   
-        glm::vec3 translation(0, -50, 0);
-        // Our state
         bool show_demo_window = true;
         bool show_another_window = false;
         ImVec4 clear_color = ImVec4(0.45f, 0.55f, 0.60f, 1.00f);
@@ -113,22 +108,27 @@ int main(void)
         while (!glfwWindowShouldClose(window))
         {
             /* Render here */
+            
             glClear(GL_COLOR_BUFFER_BIT);
+
+            glm::mat4 model = glm::translate(glm::mat4(1.0f), translation);
+            glm::mat4 mvp = proj * view * model;
+            shader.SetUniformMat4f("u_MVP", mvp);
+            renderer.Draw(va, ib, shader);
+
             //New Frame
             ImGui_ImplOpenGL3_NewFrame();
             ImGui_ImplGlfw_NewFrame();
             ImGui::NewFrame();
-
+            //glGetError();
             if (show_demo_window)
                 ImGui::ShowDemoWindow(&show_demo_window);
 
             // 2. Show a simple window that we create ourselves. We use a Begin/End pair to created a named window.
             {
-                static float f = 0.0f;
-                static int counter = 0;
-
                 ImGui::Begin("Hello, world!");                          // Create a window called "Hello, world!" and append into it.
-                ImGui::SliderFloat3("Translation", &translation.x, 0.0f, 960.0f);
+                ImGui::SliderFloat3("Translation a", &translation.x, 0.0f, 960.0f);
+                ImGui::SliderFloat3("Translation b", &translationb.x, 0.0f, 960.0f);
                 ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
                 ImGui::End();
             }
@@ -136,17 +136,13 @@ int main(void)
             // Rendering
             ImGui::Render();
             ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
-
-            glm::mat4 model = glm::translate(glm::mat4(1.0f), translation);
-            glm::mat4 mvp = proj * view * model;
-            shader.SetUniformMat4f("u_MVP", mvp);
-
-            renderer.Draw(va, ib, shader);
-
-            /* Swap front and back buffers */
-            glfwSwapBuffers(window);
-                       
+            {
+                
+                //renderer.Draw(va, ib, shader);
+            }
+            /* Swap front and back buffers */            
             /* Poll for and process events */
+            glfwSwapBuffers(window);
             glfwPollEvents();
         }
         //No need because the destructor of shader.cpp will destroy it
