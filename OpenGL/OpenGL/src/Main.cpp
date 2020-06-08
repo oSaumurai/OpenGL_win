@@ -22,6 +22,7 @@
 
 #include "tests/TestClearColor.h"
 #include "tests/TestTexture2D.h"
+#include "tests/TestTexture3D.h"
 int main(void)
 {
     GLFWwindow* window;
@@ -67,12 +68,14 @@ int main(void)
 
         testMenu->RegisterTest<test::TestClearColor>("Clear Color");
         testMenu->RegisterTest<test::TestTexture2D>("Texture 2D");
+        testMenu->RegisterTest<test::TestTexture3D>("Texture 3D");
         /* Loop until the user closes the window */
         while (!glfwWindowShouldClose(window))
         {
             /* Render here */
             glClearColor(0.0f, 0.0f, 0.0f, 1.0f);
             GLCall(glClear(GL_COLOR_BUFFER_BIT));
+            GLCall(glClear(GL_DEPTH_BUFFER_BIT));
             //renderer.Clear();
 
             //New Frame
