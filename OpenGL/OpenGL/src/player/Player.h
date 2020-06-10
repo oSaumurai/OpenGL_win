@@ -3,8 +3,6 @@
 
 #include "glm/glm.hpp"
 #include "Camera/Camera.h"
-//#include "../camera/camera.h"
-//#include "../utils/printer.h"
 
 //class Camera;
 

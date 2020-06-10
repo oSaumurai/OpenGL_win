@@ -624,6 +624,9 @@
     <ClInclude Include="src\VertexBufferLayout.h" />
     <ClInclude Include="src\window\Window.h" />
   </ItemGroup>
+  <ItemGroup>
+    <Text Include="Todo.txt" />
+  </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
   </ImportGroup>
