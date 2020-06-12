@@ -313,6 +313,14 @@
     <None Include="src\vendor\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\controller\commands\Command_Include.h" />
+    <ClInclude Include="src\controller\commands\ICommand.h" />
+    <ClInclude Include="src\controller\commands\MoveBackCommand.h" />
+    <ClInclude Include="src\controller\commands\MoveDownCommand.h" />
+    <ClInclude Include="src\controller\commands\MoveForwardCommand.h" />
+    <ClInclude Include="src\controller\commands\MoveLeftCommand .h" />
+    <ClInclude Include="src\controller\commands\MoveRightCommand.h" />
+    <ClInclude Include="src\controller\commands\MoveUpCommand.h" />
     <ClInclude Include="src\controller\KeyboardController.h" />
     <ClInclude Include="src\player\Player.h" />
     <ClInclude Include="src\controller\Controller.h" />

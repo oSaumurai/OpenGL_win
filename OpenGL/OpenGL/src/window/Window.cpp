@@ -14,7 +14,11 @@ Window::Window(int height, int width)
 
     initGLew();
     initGUI();
-    
+
+    mouseController = MouseController::getInstance();
+    keyboardController = KeyboardController::getInstance();
+    mouseController->AttachWindowInput(window);
+    keyboardController->AttachWindowInput(window);
 }
 
 Window::~Window()
@@ -38,8 +42,8 @@ void Window::initGLfw()
 
 void Window::initOpenGLOption()
 {
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 }
 
@@ -79,37 +83,40 @@ void Window::Update()
     /* Loop until the user closes the window */
     //if (!shouldClose())
     //{
+    mouseController->updateInput();
+    keyboardController->updateInput();
+    //std::cout << "x axis:: "<< mouseController->mouse_offset_x << std::endl;
         /* Render here */
-        GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
-        GLCall(glClear(GL_COLOR_BUFFER_BIT));
-        GLCall(glClear(GL_DEPTH_BUFFER_BIT));
-        //renderer.Clear();
+    GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
+    GLCall(glClear(GL_COLOR_BUFFER_BIT));
+    GLCall(glClear(GL_DEPTH_BUFFER_BIT));
+    //renderer.Clear();
 
-        //New Frame
-        ImGui_ImplOpenGL3_NewFrame();
-        ImGui_ImplGlfw_NewFrame();
-        ImGui::NewFrame();
-        if (currentTest)
+    //New Frame
+    ImGui_ImplOpenGL3_NewFrame();
+    ImGui_ImplGlfw_NewFrame();
+    ImGui::NewFrame();
+    if (currentTest)
+    {
+        currentTest->OnUpdate(0.0f);
+        currentTest->OnRender();
+        ImGui::Begin("Test");
+        if (currentTest != testMenu && ImGui::Button("<-"))
         {
-            currentTest->OnUpdate(0.0f);
-            currentTest->OnRender();
-            ImGui::Begin("Test");
-            if (currentTest != testMenu && ImGui::Button("<-"))
-            {
-                delete currentTest;
-                currentTest = testMenu;
-            }
-            currentTest->OnImGuiRender();
-            ImGui::End();
+            delete currentTest;
+            currentTest = testMenu;
         }
-        // Rendering
-        ImGui::Render();
-        ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
+        currentTest->OnImGuiRender();
+        ImGui::End();
+    }
+    // Rendering
+    ImGui::Render();
+    ImGui_ImplOpenGL3_RenderDrawData(ImGui::GetDrawData());
 
-        /* Swap front and back buffers */
-        /* Poll for and process events */
-        glfwSwapBuffers(window);
-        glfwPollEvents();
+    /* Swap front and back buffers */
+    /* Poll for and process events */
+    glfwSwapBuffers(window);
+    glfwPollEvents();
     //}
 }
 

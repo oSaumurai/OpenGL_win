@@ -6,6 +6,7 @@
 #include "glm/gtc/matrix_transform.hpp"
 #include "obj_loader/tiny_obj_loader.h"
 
+#include <iostream>
 namespace test {
 
     TestTexture3D::TestTexture3D()
@@ -13,6 +14,12 @@ namespace test {
         m_Proj(glm::perspective(90.0f,1.0f,0.1f,100.0f)), 
         m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, -6.0f)))
 	{
+        camera = new Camera(glm::vec3(0.0f, 0.0f, 2.0f));
+
+        //mouseController = MouseController::getInstance();
+        keyboardController = KeyboardController::getInstance();
+        InitController();
+
         mesh obj;
         obj.LoadFromObjectFile("res/cube.obj");
 
@@ -93,7 +100,11 @@ namespace test {
 
 	void TestTexture3D::OnUpdate(float deltaTime)
 	{
-
+        //mouseController->updateInput();
+        //keyboardController->updateInput();
+        camera->updateCameraVectors();
+        m_View = camera->GetViewMartix();
+        //std::cout << "x axis: " << mouseController->mouse_offset_x << std::endl;
 	}
 	void TestTexture3D::OnRender()
 	{
@@ -120,4 +131,13 @@ namespace test {
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
         ImGui::End();
 	}
+    void TestTexture3D::InitController()
+    {
+        keyboardController->RegisterCommand(GLFW_KEY_W, new MoveForwardCommand(camera));
+        keyboardController->RegisterCommand(GLFW_KEY_S, new MoveBackCommand(camera));
+        keyboardController->RegisterCommand(GLFW_KEY_A, new MoveLeftCommand(camera));
+        keyboardController->RegisterCommand(GLFW_KEY_D, new MoveRightCommand(camera));
+        keyboardController->RegisterCommand(GLFW_KEY_SPACE, new MoveUpCommand(camera));
+        keyboardController->RegisterCommand(GLFW_KEY_Q, new MoveDownCommand(camera));        
+    }
 }

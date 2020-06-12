@@ -1,108 +1,101 @@
 #include "Camera.h"
 
-Camera::Camera(glm::vec3* pos) 
-	: camera_position(pos) 
+Camera::Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = glm::vec3(0.0f, 1.0f, 0.0f),
+    float yaw = YAW, float pitch = PITCH) : Front(glm::vec3(0.0f, 0.0f, -1.0f)), 
+    MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM),
+    Velocity(0.4f)
 {
-	direction_up = glm::vec3(0.f, 0.f, 1.f);
-	camera_front = glm::vec3(0.f, 0.f, -1.f);
-	camera_up = direction_up;
-	sensitivity = 5.f;
-	pitch = 0.f;
-	yaw = -90.f;
-	roll = 0.f;
-	camera_right = glm::vec3(0.f);
-	y_enable = false;
-	y_reverse = false;
-
-	updateVectors();
+    Position = position;
+    WorldUp = up;
+    Yaw = yaw;
+    Pitch = pitch;
+    mouseController = MouseController::getInstance();
+    updateCameraVectors();
 }
 
-void Camera::setPosition(float px, float py, float pz) 
+Camera::Camera(glm::vec3 position)
+    :MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM), 
+    WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)), Front(glm::vec3(0.0f, 0.0f, -1.0f)),
+    Yaw(YAW), Pitch(PITCH), Position(position), Velocity(0.4f)
 {
-	camera_position->x = px;
-	camera_position->y = py;
-	camera_position->z = pz;
+   mouseController = MouseController::getInstance();
+   updateCameraVectors();
 }
 
-Camera::~Camera() 
+Camera::~Camera()
 {
 }
 
-void Camera::updateVectors() 
+glm::mat4 Camera::GetViewMartix()
 {
-	camera_front.x = cos(glm::radians(yaw)) * cos(glm::radians(pitch));
-	camera_front.y = sin(glm::radians(pitch));
-	camera_front.z = sin(glm::radians(yaw)) * cos(glm::radians(pitch));
-
-	camera_front = glm::normalize(camera_front);
-	camera_right = glm::normalize(glm::cross(camera_front, direction_up));
-	camera_up = glm::normalize(glm::cross(camera_right, camera_front));
+    return glm::lookAt(Position, Position + Front, Up);
 }
 
-void Camera::setDirectionUp(float x, float y, float z) 
+glm::vec3 Camera::GetPosition()
 {
-	direction_up = glm::vec3(x, y, z);
+    return Position;
 }
 
-void Camera::setCameraFront(float x, float y, float z) 
+void Camera::MoveBack()
 {
-	camera_front = glm::vec3(x, y, z);
+    Position -= Front * Velocity;
 }
 
-void Camera::moveFront(float d) 
+void Camera::MoveForward()
 {
-	*camera_position += camera_front * d;
+    Position += Front * Velocity;
 }
 
-void Camera::moveBack(float d) 
+void Camera::MoveUp()
 {
-	*camera_position -= camera_front * d;
+    Position += Up * Velocity;
 }
 
-void Camera::moveLeft(float d) 
+void Camera::MoveDown()
 {
-	*camera_position -= camera_right * d;
+    Position -= Up * Velocity;
 }
 
-void Camera::moveRight(float d) 
+void Camera::MoveLeft()
 {
-	*camera_position += camera_right * d;
+    Position -= Right * Velocity;
 }
 
-void Camera::moveUp(float d) 
+void Camera::MoveRight()
 {
-	*camera_position += direction_up * d;
+    Position += Right * Velocity;
 }
 
-void Camera::moveDown(float d) 
+void Camera::updateCameraVectors()
 {
-	*camera_position -= direction_up * d;
+    mouseController->GetMouseOffset();
+    Yaw += mouseController->mouse_offset_x;
+    Pitch += mouseController->mouse_offset_y;
+
+    if (Pitch > 89.0f)
+        Pitch = 89.0f;
+    if (Pitch < -89.0f)
+        Pitch = -89.0f;
+
+    glm::vec3 front;
+    front.x = cos(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+    front.y = sin(glm::radians(Pitch));
+    front.z = sin(glm::radians(Yaw)) * cos(glm::radians(Pitch));
+    Front = glm::normalize(front);
+    // also re-calculate the Right and Up vector
+    Right = glm::normalize(glm::cross(Front, WorldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
+    Up = glm::normalize(glm::cross(Right, Front));
 }
 
-void Camera::updateByMouseInput(float dt, double offset_x, double offset_y) 
+/*void Camera::ProcessKeyBoard(Camera_Movement direction, float deltaTime)
 {
-	float dp = static_cast<float>(offset_y) * sensitivity * dt;
-
-	if (y_reverse)
-		pitch += dp;
-	else
-		pitch -= dp;
-
-	if (pitch > 80.f)
-		pitch = 80.f;
-	else if (pitch < -80.f)
-		pitch = -80.f;
-
-	yaw += static_cast<float>(offset_x) * sensitivity * dt;
-
-	if (yaw > 360.f || yaw < -360.f)
-		yaw = 0.f;
-}
-
-glm::mat4 Camera::getViewMatrix() 
-{
-	updateVectors();
-
-	return glm::lookAt(*camera_position, *camera_position + camera_front,
-		camera_up);
-}
+    float velocity = MovementSpeed * deltaTime;
+    if (direction == FORWARD)
+        Position += Front * velocity;
+    if (direction == BACKWARD)
+        Position -= Front * velocity;
+    if (direction == LEFT)
+        Position -= Right * velocity;
+    if (direction == RIGHT)
+        Position += Right * velocity;
+}*/
