@@ -69,8 +69,8 @@ void Camera::MoveRight()
 void Camera::updateCameraVectors()
 {
     mouseController->GetMouseOffset();
-    Yaw += mouseController->mouse_offset_x;
-    Pitch += mouseController->mouse_offset_y;
+    Yaw += mouseController->mouse_offset_x / 4;
+    Pitch += mouseController->mouse_offset_y / 4;
 
     if (Pitch > 89.0f)
         Pitch = 89.0f;
