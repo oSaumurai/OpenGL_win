@@ -2,56 +2,11 @@
 #include "Renderer.h"
 #include "imgui/imgui.h"
 
-
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
+#include "obj_loader/tiny_obj_loader.h"
 
 namespace test {
-    struct vec3d
-    {
-        float x, y, z;
-    };
-    struct triangle
-    {
-        vec3d p[3];
-    };
-    struct mesh
-    {
-        std::vector<triangle> tris;
-        bool LoadFromObjectFile(std::string filename)
-        {
-            std::ifstream f(filename);
-            if (!f.is_open())
-                return false;
-
-            std::vector<vec3d> verts;
-
-            while (!f.eof())
-            {
-                char line[128];
-                f.getline(line, 128);
-
-                std::strstream s;
-                s << line;
-
-                char junk;
-                if (line[0] == 'v')
-                {
-                    vec3d v;
-                    s >> junk >> v.x >> v.y >> v.z;
-                    verts.push_back(v);
-                }
-                if (line[0] == 'f')
-                {
-                    int f[3];
-                    s >> junk >> f[0] >> f[1] >> f[2];
-                    tris.push_back({ verts[f[0] - 1],verts[f[1] - 1],verts[f[2] - 1] });
-                }
-            }
-
-            return true;
-        }
-    };
 
     TestTexture3D::TestTexture3D()
         :m_Translation(0,0,0), 
@@ -59,13 +14,8 @@ namespace test {
         m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, -6.0f)))
 	{
         mesh obj;
-        obj.tris =
-        {
-            {100.0f, 100.0f, 0.0f},
-            {200.0f, 100.0f, 1.0f},
-            {200.0f, 200.0f, 1.0f},
-            {100.0f, 200.0f, 0.0f}
-        };
+        obj.LoadFromObjectFile("res/cube.obj");
+
         float positions[] = {
              -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, // bottom-left
              1.0f,  1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 1.0f, 1.0f, // top-right
@@ -115,16 +65,19 @@ namespace test {
             2, 3, 0
         };
 
+        void* data = &obj.verts[0];
+
+        std::cout << sizeof(positions) << std::endl;
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GLCall(glEnable(GL_BLEND));
 
         m_VAO = std::make_unique<VertexArray>();
-        m_VertexBuffer = std::make_unique<VertexBuffer>(positions, sizeof(positions));      
+        m_VertexBuffer = std::make_unique<VertexBuffer>(data, 100*sizeof(float));
         //m_IndexBuffer = std::make_unique<IndexBuffer>(indices, 6);
         VertexBufferLayout layout;
         layout.Push<float>(3);
-        layout.Push<float>(3);
-        layout.Push<float>(2);
+        //layout.Push<float>(3);
+        //layout.Push<float>(2);
         m_VAO->AddBuffer(*m_VertexBuffer, layout);
 
         m_Shader = std::make_unique<Shader>("res/shader/Cube.shader");
