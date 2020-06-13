@@ -12,6 +12,7 @@
 
 #include "player/Player.h"
 #include "controller/Mouse_Controller.h"
+#include "controller/KeyboardController.h"
 class Window
 {
 private:
@@ -23,14 +24,13 @@ private:
 	void initGLew();
 	void initGUI();
 
+	void initController();
 public:
 	bool shouldClose();
 
 	GLFWwindow* window;
-
-	Player* player;
 	MouseController* mouseController;
-
+	KeyboardController* keyboardController;
 	test::Test* currentTest;
 	test::TestMenu* testMenu;
 

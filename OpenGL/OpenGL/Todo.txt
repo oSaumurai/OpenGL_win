@@ -1,1 +1,5 @@
-The update loop in Window needs to be optimize
+mesh loader
+
+VAO abstraction
+
+Controller abstraction + World abstraction

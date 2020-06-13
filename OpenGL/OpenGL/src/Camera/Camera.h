@@ -5,40 +5,63 @@
 #include <GLFW/glfw3.h>
 #include <glm/glm.hpp>
 #include <glm/gtc/matrix_transform.hpp>
+#include "controller/Mouse_Controller.h"
+enum Camera_Movement
+{
+	FORWARD,
+	BACKWARD,
+	LEFT,
+	RIGHT
+};
 
-class Camera {
+const float YAW = -90.0f;
+const float PITCH = 0.0f;
+const float SPEED = 4.5f;
+const float SENSITIVITY = 0.1f;
+const float ZOOM = 45.0f;
+
+class Camera 
+{
 public:
-	glm::vec3 direction_up;
-	glm::vec3 camera_up;
-	glm::vec3 camera_front;
-	glm::vec3 camera_right;
+	// camera options
+	float MovementSpeed;
+	float Velocity;
+	float MouseSensitivity;
+	float Zoom;
 
 private:
-	float pitch;
-	float yaw;
-	float roll;
-	float sensitivity;
-	bool y_enable;
-	bool y_reverse;
+	float Yaw;
+	float Pitch;
+	glm::vec3 Position;
+	glm::vec3 Front;
+	glm::vec3 Up;
+	glm::vec3 Right;
+	glm::vec3 WorldUp;
 
-	void updateVectors();
+	MouseController* mouseController;
+	
 public:
-	glm::vec3* camera_position;
-
-	Camera(glm::vec3* pos);
+	Camera(glm::vec3 position, glm::vec3 worldUp,float yaw,float pitch);
+	Camera(glm::vec3 position);
 	~Camera();
-	void setDirectionUp(float x, float y, float z);
-	void setCameraFront(float x, float y, float z);
-	void moveFront(float d);
-	void moveBack(float d);
-	void moveLeft(float d);
-	void moveRight(float d);
-	void moveUp(float d);
-	void moveDown(float d);
 
-	void setPosition(float px, float py, float pz);
-	void updateByMouseInput(float dt, double offset_x, double offset_y);
-	glm::mat4 getViewMatrix();
+	glm::mat4 GetViewMartix();	
+	glm::vec3 GetPosition();
+
+	void MoveBack();
+	void MoveForward();
+	void MoveUp();
+	void MoveDown();
+	void MoveLeft();
+	void MoveRight();
+
+	void updateCameraVectors();
+
+private:
+	void ProcessKeyBoard(Camera_Movement direction, float deltaTime);
+
 };
+
+
 
 #endif
