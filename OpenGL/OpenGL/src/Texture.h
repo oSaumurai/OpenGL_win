@@ -1,12 +1,14 @@
 #pragma once
 #include "Renderer.h"
+#include <string>
 
 class Texture
 {
-private:
+public:
 	unsigned int m_RendererID;
 	std::string m_FilePath;
 	unsigned char* m_LocalBuffer;
+	std::string type;
 	int m_Width, m_Height, m_BPP;
 
 public:

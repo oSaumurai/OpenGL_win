@@ -1,6 +1,8 @@
 #include "VertexArray.h"
 #include "Renderer.h"
 #include "VertexBufferLayout.h"
+
+#include <iostream>
 VertexArray::VertexArray()
 {
 	GLCall(glGenVertexArrays(1, &m_RendererID));	
@@ -8,6 +10,7 @@ VertexArray::VertexArray()
 
 VertexArray::~VertexArray()
 {
+	std::cout << "VAO deleted" << std::endl;
 	GLCall(glDeleteVertexArrays(1, &m_RendererID));
 }
 

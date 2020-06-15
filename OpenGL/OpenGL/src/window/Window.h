@@ -9,6 +9,7 @@
 #include "tests/TestClearColor.h"
 #include "tests/TestTexture2D.h"
 #include "tests/TestTexture3D.h"
+#include "tests/TestLoader.h"
 
 #include "player/Player.h"
 #include "controller/Mouse_Controller.h"
