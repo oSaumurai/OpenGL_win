@@ -9,7 +9,12 @@
 #include <fstream>
 #include <strstream>
 #include "IndexBuffer.h"
+
 #include "Camera/Camera.h"
+#include "controller/Mouse_Controller.h"
+#include "controller/KeyboardController.h"
+#include "controller/commands/Command_Include.h"
+
 struct vec3d
 {
     float x, y, z;
@@ -73,7 +78,9 @@ namespace test {
 		void OnImGuiRender() override;
 	private:
         //Camera camera;
-
+        MouseController* mouseController;
+        KeyboardController* keyboardController;
+        Camera* camera;
 		std::unique_ptr<VertexArray> m_VAO;
 		//std::unique_ptr<IndexBuffer> m_IndexBuffer;
 		std::unique_ptr<Shader> m_Shader;
@@ -82,5 +89,8 @@ namespace test {
 
 		glm::mat4 m_View, m_Proj;
 		glm::vec3 m_Translation;
+
+    private:
+        void InitController();
 	};
 }

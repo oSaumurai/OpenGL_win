@@ -11,3 +11,8 @@ Controller::Controller(GLFWwindow* window) {
 Controller::~Controller() {
 	// Nothing
 }
+
+void Controller::AttachWindowInput(GLFWwindow* window)
+{
+	this->window = window;
+}

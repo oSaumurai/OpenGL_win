@@ -1,21 +1,44 @@
 #include "Mouse_Controller.h"
+MouseController* MouseController::instance = NULL;
 
-MouseController::MouseController(GLFWwindow* window, Player* player) : Controller(window)
+MouseController* MouseController::getInstance()
 {
-	this->player = player;
-	initParams();
+	if (!instance)
+	{
+		instance = new MouseController();
+	}
+	return instance;
+}
+
+MouseController::MouseController()
+{
+	last_mouse_x = 0.0;
+	last_mouse_y = 0.0;
+	mouse_x = 0.0;
+	mouse_y = 0.0;
+	mouse_offset_x = 0.0;
+	mouse_offset_y = 0.0;
+	zoom = 45.0f;
+	//is_first_mouse = true;
+}
+
+glm::vec2 MouseController::GetMouseOffset()
+{
+	return glm::vec2(mouse_offset_x,mouse_offset_y);
 }
 
 void MouseController::ProcessMouseMovement()
 {
-	if (is_first_mouse) {
-		last_mouse_x = mouse_x;
-		last_mouse_y = mouse_y;
-		is_first_mouse = false;
+	if (glfwGetKey(window, GLFW_KEY_LEFT_ALT) == GLFW_PRESS)
+	{
+		mouse_offset_x = mouse_x - last_mouse_x;
+		mouse_offset_y = mouse_y - last_mouse_y;
 	}
-
-	mouse_offset_x = mouse_x - last_mouse_x;
-	mouse_offset_y = mouse_y - last_mouse_y;
+	if (glfwGetKey(window, GLFW_KEY_LEFT_ALT) == GLFW_RELEASE)
+	{
+		mouse_offset_x = 0;
+		mouse_offset_y = 0;
+	}
 	last_mouse_x = mouse_x;
 	last_mouse_y = mouse_y;
 }
@@ -29,21 +52,9 @@ void MouseController::ProcessMouseScroll()
 		zoom = 45.0f;
 }
 
-void MouseController::initParams() {
-	last_mouse_x = 0.0;
-	last_mouse_y = 0.0;
-	mouse_x = 0.0;
-	mouse_y = 0.0;
-	mouse_offset_x = 0.0;
-	mouse_offset_y = 0.0;
-	zoom = 45.0f;
-	is_first_mouse = true;
-}
-
-void MouseController::updateInput(float dt) {
+void MouseController::updateInput() {
 	glfwGetCursorPos(this->window, &mouse_x, &mouse_y);
-	// processMouse
+
 	ProcessMouseMovement();
-	ProcessMouseScroll();
-	this->player->camera.updateByMouseInput(dt, mouse_offset_x, mouse_offset_y);
+	//ProcessMouseScroll();
 }

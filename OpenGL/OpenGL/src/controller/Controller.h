@@ -13,7 +13,8 @@ public:
 	Controller(GLFWwindow* window);
 	~Controller();
 
-	virtual void updateInput(float dt) = 0;
+	virtual void AttachWindowInput(GLFWwindow* window);
+	virtual void updateInput() {}
 };
 
 #endif
