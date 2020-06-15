@@ -352,3 +352,4 @@ MigrationBackup/
 /OpenGL/Dependencies/ASSIMP
 /OpenGL/OpenGL/src/vendor/glm/out/build/x64-Debug (default)/.cmake/api/v1/reply
 
+/OpenGL/OpenGL/res/object

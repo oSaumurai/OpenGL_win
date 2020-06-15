@@ -4,7 +4,6 @@
 
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
-#include "obj_loader/tiny_obj_loader.h"
 
 #include <iostream>
 namespace test {
@@ -21,7 +20,7 @@ namespace test {
         InitController();
 
         mesh obj;
-        obj.LoadFromObjectFile("res/cube.obj");
+        obj.LoadFromObjectFile("res/object/cube.obj");
 
         float positions[] = {
              -1.0f, -1.0f, -1.0f,  0.0f,  0.0f, -1.0f, 0.0f, 0.0f, // bottom-left
@@ -100,11 +99,8 @@ namespace test {
 
 	void TestTexture3D::OnUpdate(float deltaTime)
 	{
-        //mouseController->updateInput();
-        //keyboardController->updateInput();
         camera->updateCameraVectors();
         m_View = camera->GetViewMartix();
-        //std::cout << "x axis: " << mouseController->mouse_offset_x << std::endl;
 	}
 	void TestTexture3D::OnRender()
 	{
@@ -113,9 +109,6 @@ namespace test {
         Renderer renderer;
 
         m_Texture->Bind();
-
-        //glm::mat4 proj = glm::ortho(0.0f, 800.0f, 0.0f, 800.0f, -50.0f, 50.0f);
-        //glm::mat4 view = glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, 0));
 
         glm::mat4 model = glm::translate(glm::mat4(1.0f), m_Translation);
         glm::mat4 mvp = m_Proj * m_View * model;
@@ -138,6 +131,7 @@ namespace test {
         keyboardController->RegisterCommand(GLFW_KEY_A, new MoveLeftCommand(camera));
         keyboardController->RegisterCommand(GLFW_KEY_D, new MoveRightCommand(camera));
         keyboardController->RegisterCommand(GLFW_KEY_SPACE, new MoveUpCommand(camera));
-        keyboardController->RegisterCommand(GLFW_KEY_Q, new MoveDownCommand(camera));        
+        keyboardController->RegisterCommand(GLFW_KEY_Q, new MoveDownCommand(camera));
+        //keyboardController->RegisterCommand(GLFW_KEY_ESCAPE, new ExitCommand(camera));
     }
 }

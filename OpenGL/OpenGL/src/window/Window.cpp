@@ -19,12 +19,17 @@ Window::Window(int height, int width)
     keyboardController = KeyboardController::getInstance();
     mouseController->AttachWindowInput(window);
     keyboardController->AttachWindowInput(window);
+    keyboardController->RegisterCommand(GLFW_KEY_ESCAPE ,new ExitCommand(window));
 }
 
 Window::~Window()
 {
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
+
+    delete currentTest;
+    if (currentTest != testMenu)
+        delete testMenu;
 
     glfwTerminate();
     glfwDestroyWindow(window);
@@ -42,8 +47,8 @@ void Window::initGLfw()
 
 void Window::initOpenGLOption()
 {
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 4);
-    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 5);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
+    glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
     glfwWindowHint(GLFW_OPENGL_PROFILE, GLFW_OPENGL_CORE_PROFILE);
 }
 
@@ -71,6 +76,18 @@ void Window::initGUI()
     testMenu->RegisterTest<test::TestClearColor>("Clear Color");
     testMenu->RegisterTest<test::TestTexture2D>("Texture 2D");
     testMenu->RegisterTest<test::TestTexture3D>("Texture 3D");
+    testMenu->RegisterTest<test::TestLoader>("Scene loader");
+}
+
+void Window::initController()
+{
+    /*keyboardController->RegisterCommand(GLFW_KEY_W, new MoveForwardCommand(window));
+    keyboardController->RegisterCommand(GLFW_KEY_S, new MoveBackCommand(camera));
+    keyboardController->RegisterCommand(GLFW_KEY_A, new MoveLeftCommand(camera));
+    keyboardController->RegisterCommand(GLFW_KEY_D, new MoveRightCommand(camera));
+    keyboardController->RegisterCommand(GLFW_KEY_SPACE, new MoveUpCommand(camera));
+    keyboardController->RegisterCommand(GLFW_KEY_Q, new MoveDownCommand(camera));
+    keyboardController->RegisterCommand(GLFW_KEY_ESCAPE, new ExitCommand(camera));   */
 }
 
 bool Window::shouldClose()

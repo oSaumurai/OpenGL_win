@@ -5,3 +5,4 @@
 #include "MoveLeftCommand .h"
 #include "MoveRightCommand.h"
 #include "MoveUpCommand.h"
+#include "ExitCommand.h"
