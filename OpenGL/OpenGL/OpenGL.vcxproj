@@ -154,8 +154,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\tests\Mesh.cpp" />
-    <ClCompile Include="src\tests\Model.cpp" />
+    <ClCompile Include="src\levelLoader\Mesh.cpp" />
+    <ClCompile Include="src\levelLoader\Model.cpp" />
     <ClCompile Include="src\controller\KeyboardController.cpp" />
     <ClCompile Include="src\player\Player.cpp" />
     <ClCompile Include="src\controller\Controller.cpp" />
@@ -328,8 +328,8 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\controller\commands\ExitCommand.h" />
-    <ClInclude Include="src\tests\Mesh.h" />
-    <ClInclude Include="src\tests\Model.h" />
+    <ClInclude Include="src\levelLoader\Mesh.h" />
+    <ClInclude Include="src\levelLoader\Model.h" />
     <ClInclude Include="src\controller\commands\Command_Include.h" />
     <ClInclude Include="src\controller\commands\ICommand.h" />
     <ClInclude Include="src\controller\commands\MoveBackCommand.h" />

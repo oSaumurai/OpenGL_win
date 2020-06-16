@@ -35,30 +35,22 @@ public:
 	Mesh(std::vector<Vertex> vertices,
 		std::vector<unsigned int> indices,
 		std::vector<TextureInfo> textures);
-	//Mesh(const Mesh& mesh);
 	~Mesh();
 
-	void Draw();
+	void Draw(Shader& shader);
 	void Destroy();
 public:
 	std::vector<Vertex> vertices;
 	std::vector<unsigned int> indices;
 	std::vector<TextureInfo> textures;
-	//unsigned int VAO;
 
 private:
 	std::shared_ptr<VertexArray> m_VAO;
-	std::shared_ptr<Shader> m_Shader;
 	std::shared_ptr<VertexBuffer> m_VertexBuffer;
 	std::shared_ptr<IndexBuffer> m_IndexBuffer;
-	
-	glm::vec3 m_Translation;
-	glm::mat4 m_Proj;
-	glm::mat4 m_View;
+
 	//unsigned int VBO, EBO;
 private:
-
 	void SetupMesh();
-
 };
 

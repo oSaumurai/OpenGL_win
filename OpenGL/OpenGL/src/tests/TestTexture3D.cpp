@@ -14,10 +14,7 @@ namespace test {
         m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, -6.0f)))
 	{
         camera = new Camera(glm::vec3(0.0f, 0.0f, 2.0f));
-
-        //mouseController = MouseController::getInstance();
         keyboardController = KeyboardController::getInstance();
-        InitController();
 
         mesh obj;
         obj.LoadFromObjectFile("res/object/cube.obj");
@@ -124,14 +121,5 @@ namespace test {
         ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / ImGui::GetIO().Framerate, ImGui::GetIO().Framerate);
         ImGui::End();
 	}
-    void TestTexture3D::InitController()
-    {
-        keyboardController->RegisterCommand(GLFW_KEY_W, new MoveForwardCommand(camera));
-        keyboardController->RegisterCommand(GLFW_KEY_S, new MoveBackCommand(camera));
-        keyboardController->RegisterCommand(GLFW_KEY_A, new MoveLeftCommand(camera));
-        keyboardController->RegisterCommand(GLFW_KEY_D, new MoveRightCommand(camera));
-        keyboardController->RegisterCommand(GLFW_KEY_SPACE, new MoveUpCommand(camera));
-        keyboardController->RegisterCommand(GLFW_KEY_Q, new MoveDownCommand(camera));
-        //keyboardController->RegisterCommand(GLFW_KEY_ESCAPE, new ExitCommand(camera));
-    }
+    
 }

@@ -11,14 +11,14 @@
 #include "tests/TestTexture3D.h"
 #include "tests/TestLoader.h"
 
-#include "player/Player.h"
+#include "Shader.h"
+
 #include "controller/Mouse_Controller.h"
 #include "controller/KeyboardController.h"
 class Window
 {
 private:
 	int window_height, window_witdth;
-	const char* window_name;
 
 	void initGLfw();
 	void initOpenGLOption();

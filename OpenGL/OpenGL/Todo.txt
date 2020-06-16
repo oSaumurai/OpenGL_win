@@ -1,8 +1,11 @@
 mesh loader-Done
 better framework
 
-complex shader&shader
-
-
+double to float cast
 Controller structure
 Controller abstraction + World abstraction
+
+-animation
+-complex shader&shader
+-ray
+-Game!

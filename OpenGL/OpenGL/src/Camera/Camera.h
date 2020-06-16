@@ -56,7 +56,7 @@ public:
 	void MoveRight();
 
 	void updateCameraVectors();
-
+	void ResetPosition();
 private:
 	void ProcessKeyBoard(Camera_Movement direction, float deltaTime);
 

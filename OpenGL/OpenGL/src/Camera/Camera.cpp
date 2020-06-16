@@ -87,6 +87,13 @@ void Camera::updateCameraVectors()
     Up = glm::normalize(glm::cross(Right, Front));
 }
 
+void Camera::ResetPosition()
+{
+    Position = glm::vec3(0.0f, 0.0f, 0.0f);
+    Yaw = YAW;
+    Pitch = PITCH;
+}
+
 /*void Camera::ProcessKeyBoard(Camera_Movement direction, float deltaTime)
 {
     float velocity = MovementSpeed * deltaTime;

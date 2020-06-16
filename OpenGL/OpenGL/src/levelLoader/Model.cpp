@@ -17,18 +17,18 @@ Model::~Model()
     std::cout << "Model deleted" << std::endl;
 }
 
-void Model::Draw()
+void Model::Draw(Shader& shader)
 {
 	for (unsigned int i = 0; i < meshes.size(); i++)
 	{
-		meshes[i].Draw();
+		meshes[i].Draw(shader);
 	}
 }
 
 void Model::LoadModel(std::string const& path)
 {
     Assimp::Importer importer;
-    scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+    const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
     // check for errors
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
     {
@@ -50,7 +50,7 @@ void Model::ProcessNode(aiNode* node, const aiScene* scene)
     {
         // the node object only contains indices to index the actual objects in the scene. 
         // the scene contains all the data, node is just to keep stuff organized (like relations between nodes).
-        mesh = scene->mMeshes[node->mMeshes[i]];
+        aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
         meshes.push_back(ProcessMesh(mesh, scene));
     }
     // after we've processed all of the meshes (if any) we then recursively process each of the children nodes

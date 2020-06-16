@@ -87,7 +87,7 @@ void Window::initController()
     keyboardController->RegisterCommand(GLFW_KEY_D, new MoveRightCommand(camera));
     keyboardController->RegisterCommand(GLFW_KEY_SPACE, new MoveUpCommand(camera));
     keyboardController->RegisterCommand(GLFW_KEY_Q, new MoveDownCommand(camera));
-    keyboardController->RegisterCommand(GLFW_KEY_ESCAPE, new ExitCommand(camera));   */
+    keyboardController->RegisterCommand(GLFW_KEY_ESCAPE, new ExitCommand(camera));*/
 }
 
 bool Window::shouldClose()
