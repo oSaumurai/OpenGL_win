@@ -105,6 +105,9 @@
     <ClCompile Include="src\levelLoader\Model.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\renderOjbects\Skybox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
@@ -518,6 +521,7 @@
     </None>
     <None Include="res\shader\Cube.Shader" />
     <None Include="res\shader\Assimp.shader" />
+    <None Include="res\shader\skybox.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Renderer.h">
@@ -1484,6 +1488,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\levelLoader\Model.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\renderOjbects\Skybox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

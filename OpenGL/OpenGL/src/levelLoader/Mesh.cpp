@@ -10,7 +10,7 @@ Mesh::Mesh(std::vector<Vertex> Vertices, std::vector<unsigned int> Indices, std:
 
 Mesh::~Mesh()
 {    
-    std::cout << "mesh deleted" << std::endl;
+    //std::cout << "mesh deleted" << std::endl;
 }
 
 
@@ -53,6 +53,7 @@ void Mesh::Draw(Shader& shader)
     renderer.Draw(*m_VAO, *m_IndexBuffer,shader);
     
     m_VAO->UnBind();
+    //GLCall(glBindTexture(GL_TEXTURE_2D, 0));
     glActiveTexture(GL_TEXTURE0);
 }
 

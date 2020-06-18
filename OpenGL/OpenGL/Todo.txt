@@ -5,6 +5,17 @@ double to float cast
 Controller structure
 Controller abstraction + World abstraction
 
+- Cook-Torrance BRDF
+- Irradiance mapping
+- Prefiltered environment maps + BRDFintegration map
+- Normal mapping
+- Skybox
+- FXAA
+- Gamma Correction
+- HDR
+- Tone mapping
+
+
 -animation
 -complex shader&shader
 -ray

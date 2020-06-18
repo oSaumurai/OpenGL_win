@@ -14,7 +14,7 @@ Model::~Model()
 {
     for (unsigned int i = 0; i < meshes.size(); ++i)
         meshes[i].Destroy(); // the member variable of the Model Class
-    std::cout << "Model deleted" << std::endl;
+    //std::cout << "Model deleted" << std::endl;
 }
 
 void Model::Draw(Shader& shader)

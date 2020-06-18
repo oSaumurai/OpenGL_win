@@ -105,8 +105,7 @@ void Window::Update()
     //std::cout << "x axis:: "<< mouseController->mouse_offset_x << std::endl;
         /* Render here */
     GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
-    GLCall(glClear(GL_COLOR_BUFFER_BIT));
-    GLCall(glClear(GL_DEPTH_BUFFER_BIT));
+    GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
     //renderer.Clear();
 
     //New Frame
@@ -132,8 +131,8 @@ void Window::Update()
 
     /* Swap front and back buffers */
     /* Poll for and process events */
-    glfwSwapBuffers(window);
-    glfwPollEvents();
+    GLCall(glfwSwapBuffers(window));
+    GLCall(glfwPollEvents());
     //}
 }
 
