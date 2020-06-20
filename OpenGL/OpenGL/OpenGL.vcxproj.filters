@@ -108,6 +108,9 @@
     <ClCompile Include="src\opengl_core\VertexBuffer.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\Game.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
@@ -1494,6 +1497,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\opengl_core\VertexBufferLayout.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Game.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

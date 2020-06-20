@@ -6,17 +6,16 @@
 #include "imgui/imgui_impl_glfw.h"
 #include "imgui/imgui_impl_opengl3.h"
 
-#include "tests/TestClearColor.h"
-#include "tests/TestTexture2D.h"
-#include "tests/TestTexture3D.h"
-#include "tests/TestLoader.h"
-
 #include "Shader.h"
+#include "Renderer.h"
 
 #include "controller/Mouse_Controller.h"
 #include "controller/KeyboardController.h"
+const int HEIGHT = 1280;
+const int WIDTH = 720;
+
 class Window
-{
+{	
 private:
 	int window_height, window_witdth;
 
@@ -24,22 +23,21 @@ private:
 	void initOpenGLOption();
 	void initGLew();
 	void initGUI();
-
-	void initController();
 public:
 	bool shouldClose();
 
 	GLFWwindow* window;
-	MouseController* mouseController;
-	KeyboardController* keyboardController;
-	test::Test* currentTest;
-	test::TestMenu* testMenu;
 
 public:
-	Window(int height, int width);
+	Window();
 	~Window();
 	
-	void Update();
-	void Draw();
+	//void RegisterTest(test::Test*& currentTest, test::TestMenu*& testMenu);
+	virtual void OnWindowUpdate();
+	virtual void Update();
+	virtual void Draw();
+	void OnFinished();
+
+protected:
 };
 

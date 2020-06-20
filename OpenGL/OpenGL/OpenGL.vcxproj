@@ -154,6 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\levelLoader\Mesh.cpp" />
     <ClCompile Include="src\levelLoader\Model.cpp" />
     <ClCompile Include="src\controller\KeyboardController.cpp" />
@@ -330,6 +331,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\controller\commands\ExitCommand.h" />
+    <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\levelLoader\Mesh.h" />
     <ClInclude Include="src\levelLoader\Model.h" />
     <ClInclude Include="src\controller\commands\Command_Include.h" />
