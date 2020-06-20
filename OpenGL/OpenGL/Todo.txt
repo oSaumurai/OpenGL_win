@@ -1,5 +1,23 @@
-mesh loader
+mesh loader-Done
+better framework
 
-VAO abstraction
-
+double to float cast
+Controller structure
 Controller abstraction + World abstraction
+
+- Cook-Torrance BRDF
+- Irradiance mapping
+- Prefiltered environment maps + BRDFintegration map
+- Normal mapping (ez)
+- Skybox (simple one is done)
+- FXAA
+- Gamma Correction
+- HDR
+- Tone mapping
+
+
+-animation
+-complex shader&shader
+-ray
+-Game!
+-Scene Editor

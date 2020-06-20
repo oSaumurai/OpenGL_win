@@ -15,6 +15,7 @@ public:
 
 	//void AttachWindowInput(GLFWwindow* window);
 	void RegisterCommand(int key, ICommand* command);
+	void UnRegisterCommand();
 	void updateInput() override;
 
 private:

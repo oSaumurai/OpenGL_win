@@ -15,7 +15,7 @@ Camera::Camera(glm::vec3 position = glm::vec3(0.0f, 0.0f, 0.0f), glm::vec3 up = 
 
 Camera::Camera(glm::vec3 position)
     :MovementSpeed(SPEED), MouseSensitivity(SENSITIVITY), Zoom(ZOOM), 
-    WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)), Front(glm::vec3(0.0f, 0.0f, -1.0f)),
+    WorldUp(glm::vec3(0.0f, 1.0f, 0.0f)), Front(glm::vec3(0.0f, 0.0f, 0.0f)),
     Yaw(YAW), Pitch(PITCH), Position(position), Velocity(0.4f)
 {
    mouseController = MouseController::getInstance();
@@ -70,7 +70,7 @@ void Camera::updateCameraVectors()
 {
     mouseController->GetMouseOffset();
     Yaw += mouseController->mouse_offset_x / 4;
-    Pitch += mouseController->mouse_offset_y / 4;
+    Pitch -= mouseController->mouse_offset_y / 4;
 
     if (Pitch > 89.0f)
         Pitch = 89.0f;
@@ -85,6 +85,13 @@ void Camera::updateCameraVectors()
     // also re-calculate the Right and Up vector
     Right = glm::normalize(glm::cross(Front, WorldUp));  // normalize the vectors, because their length gets closer to 0 the more you look up or down which results in slower movement.
     Up = glm::normalize(glm::cross(Right, Front));
+}
+
+void Camera::ResetPosition()
+{
+    Position = glm::vec3(0.0f, 0.0f, 0.0f);
+    Yaw = YAW;
+    Pitch = PITCH;
 }
 
 /*void Camera::ProcessKeyBoard(Camera_Movement direction, float deltaTime)
