@@ -17,7 +17,7 @@ namespace test {
         //window(Window::window)
     {        
         camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f));
-        model = std::make_unique<Model>("res/object/scene/Tree1/Tree1.obj");
+        model = std::make_unique<Model>("res/object/Tree1/Tree1.obj");
         skybox = std::make_unique<Skybox>("res/object/skybox");
         //model = std::make_unique<Model>("res/object/beach/obj/scene.obj");
         //model = std::make_unique<Model>("res/object/scene/spacestation/Space Station Scene.blend");
