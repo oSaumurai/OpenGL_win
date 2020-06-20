@@ -22,11 +22,8 @@ public:
 	Model(std::string const& path, bool gamma = false);
 	~Model();
 
-	void Draw();
+	void Draw(Shader& shader);
 private:
-	const aiScene* scene;
-	aiMesh* mesh;
-
 	void LoadModel(std::string const& path);
 	void ProcessNode(aiNode* node, const aiScene* scene);
 	Mesh ProcessMesh(aiMesh* mesh, const aiScene* scene);

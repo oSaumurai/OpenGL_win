@@ -1,10 +1,10 @@
 #pragma once
 #include "ICommand.h"
-
+#include <memory>
 class MoveBackCommand : public ICommand
 {
 public:
-	MoveBackCommand(Camera* Camera) {
+	MoveBackCommand(Camera*& Camera) {
 		camera = Camera;
 	}
 	

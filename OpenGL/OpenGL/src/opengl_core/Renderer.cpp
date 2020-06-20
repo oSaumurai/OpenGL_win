@@ -43,7 +43,6 @@ void Renderer::Draw(const VertexArray& va, const IndexBuffer& ib, const Shader& 
 
 void Renderer::DrawCube(const VertexArray& va, const Shader& shader) const
 {
-    GLCall(glEnable(GL_DEPTH_TEST));
     shader.Bind();
     va.Bind();
     GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));

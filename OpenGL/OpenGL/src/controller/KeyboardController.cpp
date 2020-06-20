@@ -19,10 +19,7 @@ void KeyboardController::ProcessInput()
 
 KeyboardController::~KeyboardController()
 {
-	for (auto it : commands) 
-	{
-		delete it.second;
-	}
+	UnRegisterCommand();
 }
 
 
@@ -33,6 +30,16 @@ void KeyboardController::RegisterCommand(int key, ICommand* command)
 		keys.insert(key);
 		commands[key] = command;
 	}
+}
+
+void KeyboardController::UnRegisterCommand()
+{
+	keys.clear();
+	for (auto it : commands)
+	{
+		delete it.second;
+	}
+	commands.clear();
 }
 
 void KeyboardController::updateInput()

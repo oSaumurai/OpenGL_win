@@ -14,21 +14,21 @@ Model::~Model()
 {
     for (unsigned int i = 0; i < meshes.size(); ++i)
         meshes[i].Destroy(); // the member variable of the Model Class
-    std::cout << "Model deleted" << std::endl;
+    //std::cout << "Model deleted" << std::endl;
 }
 
-void Model::Draw()
+void Model::Draw(Shader& shader)
 {
 	for (unsigned int i = 0; i < meshes.size(); i++)
 	{
-		meshes[i].Draw();
+		meshes[i].Draw(shader);
 	}
 }
 
 void Model::LoadModel(std::string const& path)
 {
     Assimp::Importer importer;
-    scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
+    const aiScene* scene = importer.ReadFile(path, aiProcess_Triangulate | aiProcess_FlipUVs | aiProcess_CalcTangentSpace);
     // check for errors
     if (!scene || scene->mFlags & AI_SCENE_FLAGS_INCOMPLETE || !scene->mRootNode) // if is Not Zero
     {
@@ -50,7 +50,7 @@ void Model::ProcessNode(aiNode* node, const aiScene* scene)
     {
         // the node object only contains indices to index the actual objects in the scene. 
         // the scene contains all the data, node is just to keep stuff organized (like relations between nodes).
-        mesh = scene->mMeshes[node->mMeshes[i]];
+        aiMesh* mesh = scene->mMeshes[node->mMeshes[i]];
         meshes.push_back(ProcessMesh(mesh, scene));
     }
     // after we've processed all of the meshes (if any) we then recursively process each of the children nodes
@@ -78,10 +78,15 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
         vector.z = mesh->mVertices[i].z;
         vertex.Position = vector;
         // normals
-        vector.x = mesh->mNormals[i].x;
-        vector.y = mesh->mNormals[i].y;
-        vector.z = mesh->mNormals[i].z;
-        vertex.Normal = vector;
+        if (mesh->mNormals)
+        {
+            vector.x = mesh->mNormals[i].x;
+            vector.y = mesh->mNormals[i].y;
+            vector.z = mesh->mNormals[i].z;
+            vertex.Normal = vector;
+        }
+        else
+            vertex.Normal = glm::vec3(0.0f, 0.0f, 0.0f);
         // texture coordinates
         if (mesh->mTextureCoords[0]) // does the mesh contain texture coordinates?
         {
@@ -95,15 +100,23 @@ Mesh Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
         else
             vertex.TexCoords = glm::vec2(0.0f, 0.0f);
         // tangent
-        vector.x = mesh->mTangents[i].x;
-        vector.y = mesh->mTangents[i].y;
-        vector.z = mesh->mTangents[i].z;
-        vertex.Tangent = vector;
+        if (mesh->mTangents) {
+            vector.x = mesh->mTangents[i].x;
+            vector.y = mesh->mTangents[i].y;
+            vector.z = mesh->mTangents[i].z;
+            vertex.Tangent = vector;
+        }
+        else
+            vertex.Tangent = glm::vec3(0.0f, 0.0f, 0.0f);
         // bitangent
-        vector.x = mesh->mBitangents[i].x;
-        vector.y = mesh->mBitangents[i].y;
-        vector.z = mesh->mBitangents[i].z;
-        vertex.Bitangent = vector;
+        if (mesh->mBitangents) {
+            vector.x = mesh->mBitangents[i].x;
+            vector.y = mesh->mBitangents[i].y;
+            vector.z = mesh->mBitangents[i].z;
+            vertex.Bitangent = vector;
+        }
+        else
+            vertex.Bitangent = glm::vec3(0.0f, 0.0f, 0.0f);
         vertices.push_back(vertex);
     }
     // now wak through each of the mesh's faces (a face is a mesh its triangle) and retrieve the corresponding vertex indices.
