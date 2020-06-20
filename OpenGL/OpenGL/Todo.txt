@@ -8,8 +8,8 @@ Controller abstraction + World abstraction
 - Cook-Torrance BRDF
 - Irradiance mapping
 - Prefiltered environment maps + BRDFintegration map
-- Normal mapping
-- Skybox
+- Normal mapping (ez)
+- Skybox (simple one is done)
 - FXAA
 - Gamma Correction
 - HDR
@@ -20,3 +20,4 @@ Controller abstraction + World abstraction
 -complex shader&shader
 -ray
 -Game!
+-Scene Editor

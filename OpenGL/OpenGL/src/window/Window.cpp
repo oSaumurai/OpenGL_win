@@ -14,7 +14,7 @@ Window::Window(int height, int width)
 
     initGLew();
     initGUI();
-
+    glViewport(0, 0, 1280, 720);
     mouseController = MouseController::getInstance();
     keyboardController = KeyboardController::getInstance();
     mouseController->AttachWindowInput(window);
