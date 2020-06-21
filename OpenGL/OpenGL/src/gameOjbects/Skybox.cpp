@@ -57,7 +57,7 @@ Skybox::Skybox(std::string filepath)
         (filepath + "/front.jpg"),
     };
     m_VAO = std::make_unique<VertexArray>();
-    m_VBO = std::make_unique<VertexBuffer>(&skyboxVertices, sizeof(skyboxVertices) * sizeof(float));
+    m_VBO = std::make_unique<VertexBuffer>(skyboxVertices, sizeof(skyboxVertices));
 
     //m_IndexBuffer = std::make_unique<IndexBuffer>(skyboxIndices, sizeof(skyboxIndices));
     VertexBufferLayout layout;
@@ -79,12 +79,14 @@ void Skybox::Draw(Shader& shader)
     GLCall(glActiveTexture(GL_TEXTURE0));
     GLCall(glBindTexture(GL_TEXTURE_CUBE_MAP, m_RenderID));
     renderer.DrawCube(*m_VAO, shader);
-    m_VAO->UnBind();
+    m_VAO->UnBind(); 
+   // GLCall(glActiveTexture(GL_TEXTURE0));
 }
 
 void Skybox::LoadFromFile(std::vector<std::string> faces)
 {
     GLCall(glGenTextures(1, &m_RenderID));
+
     int width, height, nrComponents;
     for (unsigned int i = 0; i < faces.size(); i++)
     {
@@ -106,5 +108,4 @@ void Skybox::LoadFromFile(std::vector<std::string> faces)
     GLCall(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
     GLCall(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
     GLCall(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE));
-
 }

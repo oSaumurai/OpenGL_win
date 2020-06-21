@@ -8,7 +8,9 @@
 #include "Camera/Camera.h"
 #include "controller/KeyboardController.h"
 #include "controller/commands/Command_Include.h"
-#include "renderOjbects/Skybox.h"
+#include "gameOjbects/Skybox.h"
+#include "gameOjbects/BlockObject/Cube.h"
+
 #include "window/Window.h"
 namespace test {
 
@@ -29,8 +31,9 @@ namespace test {
 		//GLFWwindow*& window;
 		std::unique_ptr<Skybox> skybox;
 		std::unique_ptr<Model> model;
+		std::unique_ptr<Cube> grass;
 
-		float viewAngle = 45.0f;
+		float viewAngle = 60.0f;
 		glm::mat4 m_View, m_Proj;
 		glm::vec3 m_Translation;
 		glm::vec3 m_Rotation;

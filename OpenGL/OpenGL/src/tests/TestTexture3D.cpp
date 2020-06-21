@@ -75,7 +75,7 @@ namespace test {
         GLCall(glEnable(GL_BLEND));
 
         m_VAO = std::make_unique<VertexArray>();
-        m_VertexBuffer = std::make_unique<VertexBuffer>(&obj.verts[0],  12*obj.verts.size());
+        m_VertexBuffer = std::make_unique<VertexBuffer>(&obj.verts[0], 12 * obj.verts.size());
         //m_IndexBuffer = std::make_unique<IndexBuffer>(indices, 6);
         VertexBufferLayout layout;
         layout.Push<float>(3);
