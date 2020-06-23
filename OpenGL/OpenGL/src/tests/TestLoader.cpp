@@ -17,8 +17,9 @@ namespace test {
         //window(Window::window)
     {        
         camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f));
-        model = std::make_unique<Model>("res/object/Tree1/Tree1.obj");
-        grass = std::make_unique<Cube>();
+        //model = std::make_unique<Model>("res/object/Tree1/Tree1.obj");
+        grass = std::make_unique<Grass>();
+        alice = std::make_unique<Cube>();
         skybox = std::make_unique<Skybox>("res/object/skybox");
         //model = std::make_unique<Model>("res/object/beach/obj/scene.obj");
         //model = std::make_unique<Model>("res/object/scene/spacestation/Space Station Scene.blend");
@@ -68,8 +69,9 @@ namespace test {
         glDepthFunc(GL_LEQUAL);
         skybox->Draw(skybox_shader);
         glDepthFunc(GL_LESS);
-        model->Draw(m_shader);
+        //model->Draw(m_shader);
         grass->Draw(m_shader);
+        alice->Draw(m_shader);
     }
     void TestLoader::OnImGuiRender()
     {

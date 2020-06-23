@@ -10,6 +10,7 @@
 #include "controller/commands/Command_Include.h"
 #include "gameOjbects/Skybox.h"
 #include "gameOjbects/BlockObject/Cube.h"
+#include "gameOjbects/BlockObject/Grass.h"
 
 #include "window/Window.h"
 namespace test {
@@ -31,7 +32,8 @@ namespace test {
 		//GLFWwindow*& window;
 		std::unique_ptr<Skybox> skybox;
 		std::unique_ptr<Model> model;
-		std::unique_ptr<Cube> grass;
+		std::unique_ptr<Cube> alice;
+		std::unique_ptr<Grass> grass;
 
 		float viewAngle = 60.0f;
 		glm::mat4 m_View, m_Proj;

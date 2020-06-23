@@ -120,6 +120,12 @@
     <ClCompile Include="src\gameOjbects\BlockObject\Quad.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\gameOjbects\BlockObject\AbstractObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameOjbects\BlockObject\Grass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
@@ -1521,6 +1527,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\gameOjbects\BlockObject\Quad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameOjbects\BlockObject\AbstractObject.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
