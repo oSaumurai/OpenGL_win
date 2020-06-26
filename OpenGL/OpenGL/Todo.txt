@@ -1,9 +1,17 @@
 mesh loader-Done
-better framework
 
 double to float cast
 Controller structure
 Controller abstraction + World abstraction
+
+-shadow map
+-render core topic
+-complex shader&shader
+-texture factories
+-ray
+-animation
+-Game!
+-Scene Editor
 
 - Cook-Torrance BRDF
 - Irradiance mapping
@@ -14,10 +22,3 @@ Controller abstraction + World abstraction
 - Gamma Correction
 - HDR
 - Tone mapping
-
--texture factories
--animation
--complex shader&shader
--ray
--Game!
--Scene Editor

@@ -154,11 +154,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="src\gameOjbects\BlockObject\AbstractObject.cpp" />
-    <ClCompile Include="src\gameOjbects\BlockObject\Grass.cpp" />
-    <ClCompile Include="src\gameOjbects\BlockObject\Quad.cpp" />
+    <ClCompile Include="src\gameOjbects\ObjectManager.cpp" />
+    <ClCompile Include="src\gameOjbects\AbstractObject.cpp" />
+    <ClCompile Include="src\gameOjbects\SpriteObject\Grass.cpp" />
+    <ClCompile Include="src\gameOjbects\SpriteObject\Quad.cpp" />
     <ClCompile Include="src\gameOjbects\BlockObject\Cube.cpp" />
-    <ClCompile Include="src\gameOjbects\projectile.cpp" />
+    <ClCompile Include="src\gameOjbects\BlockObject\projectile.cpp" />
     <ClCompile Include="src\Game.cpp" />
     <ClCompile Include="src\levelLoader\Mesh.cpp" />
     <ClCompile Include="src\levelLoader\Model.cpp" />
@@ -191,6 +192,7 @@
     <ClCompile Include="src\opengl_core\VertexArray.cpp" />
     <ClCompile Include="src\opengl_core\VertexBuffer.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
+    <ClCompile Include="src\texutureFactory\TextureFactory.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Assimp.shader" />
@@ -335,11 +337,12 @@
     <None Include="src\vendor\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\gameOjbects\BlockObject\AbstractObject.h" />
-    <ClInclude Include="src\gameOjbects\BlockObject\Quad.h" />
+    <ClInclude Include="src\gameOjbects\ObjectManager.h" />
+    <ClInclude Include="src\gameOjbects\AbstractObject.h" />
+    <ClInclude Include="src\gameOjbects\SpriteObject\Quad.h" />
     <ClInclude Include="src\gameOjbects\BlockObject\Cube.h" />
-    <ClInclude Include="src\gameOjbects\BlockObject\Grass.h" />
-    <ClInclude Include="src\gameOjbects\projectile.h" />
+    <ClInclude Include="src\gameOjbects\SpriteObject\Grass.h" />
+    <ClInclude Include="src\gameOjbects\BlockObject\projectile.h" />
     <ClInclude Include="src\controller\commands\ExitCommand.h" />
     <ClInclude Include="src\Game.h" />
     <ClInclude Include="src\levelLoader\Mesh.h" />
@@ -665,6 +668,7 @@
     <ClInclude Include="src\opengl_core\VertexBuffer.h" />
     <ClInclude Include="src\opengl_core\VertexBufferLayout.h" />
     <ClInclude Include="src\window\Window.h" />
+    <ClInclude Include="src\texutureFactory\TextureFactory.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Todo.txt" />

@@ -1,6 +1,6 @@
 #pragma once
 #include "glm/glm.hpp"
-#include "AbstractObject.h"
+#include "../AbstractObject.h"
 
 #include <memory>
 

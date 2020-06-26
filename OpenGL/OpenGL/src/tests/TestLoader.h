@@ -1,6 +1,5 @@
 #pragma once
 #include "Test.h"
-#include "levelLoader/Model.h"
 #include <memory>
 #include <fstream>
 #include <strstream>
@@ -8,9 +7,11 @@
 #include "Camera/Camera.h"
 #include "controller/KeyboardController.h"
 #include "controller/commands/Command_Include.h"
+
 #include "gameOjbects/Skybox.h"
 #include "gameOjbects/BlockObject/Cube.h"
-#include "gameOjbects/BlockObject/Grass.h"
+#include "gameOjbects/SpriteObject/Grass.h"
+#include "levelLoader/Model.h"
 
 #include "window/Window.h"
 namespace test {

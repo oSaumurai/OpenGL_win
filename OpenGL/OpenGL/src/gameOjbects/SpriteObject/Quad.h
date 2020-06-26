@@ -7,7 +7,7 @@
 #include "Shader.h"
 
 #include <memory>
-#include "AbstractObject.h"
+#include "../AbstractObject.h"
 
 class Quad : public AbstractObject
 {

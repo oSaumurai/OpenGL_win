@@ -111,19 +111,25 @@
     <ClCompile Include="src\gameOjbects\Skybox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gameOjbects\projectile.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\gameOjbects\BlockObject\Cube.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gameOjbects\BlockObject\Quad.cpp">
+    <ClCompile Include="src\gameOjbects\ObjectManager.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gameOjbects\BlockObject\AbstractObject.cpp">
+    <ClCompile Include="src\gameOjbects\BlockObject\projectile.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\gameOjbects\BlockObject\Grass.cpp">
+    <ClCompile Include="src\gameOjbects\AbstractObject.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameOjbects\SpriteObject\Quad.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameOjbects\SpriteObject\Grass.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\texutureFactory\TextureFactory.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1517,19 +1523,25 @@
     <ClInclude Include="src\gameOjbects\Skybox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\gameOjbects\projectile.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\gameOjbects\BlockObject\Cube.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\gameOjbects\BlockObject\Grass.h">
+    <ClInclude Include="src\gameOjbects\ObjectManager.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\gameOjbects\BlockObject\Quad.h">
+    <ClInclude Include="src\gameOjbects\BlockObject\projectile.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\gameOjbects\BlockObject\AbstractObject.h">
+    <ClInclude Include="src\gameOjbects\AbstractObject.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameOjbects\SpriteObject\Quad.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameOjbects\SpriteObject\Grass.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\texutureFactory\TextureFactory.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

@@ -14,7 +14,6 @@ namespace test {
         m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, -6.0f))),
         m_shader("res/shader/Assimp.shader"),
         skybox_shader("res/shader/skybox.shader")
-        //window(Window::window)
     {        
         camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f));
         //model = std::make_unique<Model>("res/object/Tree1/Tree1.obj");
