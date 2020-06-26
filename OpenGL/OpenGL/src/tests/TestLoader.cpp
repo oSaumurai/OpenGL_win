@@ -13,12 +13,14 @@ namespace test {
         m_Proj(glm::perspective(glm::radians(viewAngle), 1280.0f/720.0f , 0.1f, 100.0f)),
         m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, -6.0f))),
         m_shader("res/shader/Assimp.shader"),
-        skybox_shader("res/shader/skybox.shader")
+        skybox_shader("res/shader/skybox.shader"),
+        Grass_shader("res/shader/Grass.shader")
     {        
         camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f));
         //model = std::make_unique<Model>("res/object/Tree1/Tree1.obj");
         grass = std::make_unique<Grass>();
         alice = std::make_unique<Cube>();
+        plane = std::make_unique<Plane>();
         skybox = std::make_unique<Skybox>("res/object/skybox");
         //model = std::make_unique<Model>("res/object/beach/obj/scene.obj");
         //model = std::make_unique<Model>("res/object/scene/spacestation/Space Station Scene.blend");
@@ -55,6 +57,11 @@ namespace test {
         m_shader.Bind();
         m_shader.SetUniformMat4f("u_MVP", mvp);
 
+        //model = glm::translate(model, glm::vec3(2.0,2.0,2.0));
+        //glm::mat4 mvp1 = m_Proj * m_View * model;
+        Grass_shader.Bind();
+        Grass_shader.SetUniformMat4f("u_MVP", mvp);
+
 
         //skybox translation
         glm::mat4 model_skybox = glm::mat4(1.0f);
@@ -69,8 +76,10 @@ namespace test {
         skybox->Draw(skybox_shader);
         glDepthFunc(GL_LESS);
         //model->Draw(m_shader);
-        grass->Draw(m_shader);
-        alice->Draw(m_shader);
+        //alice->Draw(m_shader);
+        
+        plane->Draw(m_shader);
+        grass->Draw(Grass_shader);
     }
     void TestLoader::OnImGuiRender()
     {

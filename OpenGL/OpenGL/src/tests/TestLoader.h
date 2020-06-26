@@ -11,7 +11,9 @@
 #include "gameOjbects/Skybox.h"
 #include "gameOjbects/BlockObject/Cube.h"
 #include "gameOjbects/SpriteObject/Grass.h"
+#include "gameOjbects/BlockObject/Plane.h"
 #include "levelLoader/Model.h"
+
 
 #include "window/Window.h"
 namespace test {
@@ -28,6 +30,7 @@ namespace test {
 	private:
 		Shader m_shader;
 		Shader skybox_shader;
+		Shader Grass_shader;
 
 		Camera* camera;
 		//GLFWwindow*& window;
@@ -35,6 +38,7 @@ namespace test {
 		std::unique_ptr<Model> model;
 		std::unique_ptr<Cube> alice;
 		std::unique_ptr<Grass> grass;
+		std::unique_ptr<Plane> plane;
 
 		float viewAngle = 60.0f;
 		glm::mat4 m_View, m_Proj;

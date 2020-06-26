@@ -2,6 +2,11 @@
 
 TextureFactory* TextureFactory::instance = nullptr;
 
+TextureFactory::TextureFactory()
+{
+
+}
+
 TextureFactory* TextureFactory::getInstance()
 {
     if (!instance)

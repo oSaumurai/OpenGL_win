@@ -154,6 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\gameOjbects\BlockObject\Plane.cpp" />
     <ClCompile Include="src\gameOjbects\ObjectManager.cpp" />
     <ClCompile Include="src\gameOjbects\AbstractObject.cpp" />
     <ClCompile Include="src\gameOjbects\SpriteObject\Grass.cpp" />
@@ -198,6 +199,7 @@
     <None Include="res\shader\Assimp.shader" />
     <None Include="res\shader\Basic.shader" />
     <None Include="res\shader\Cube.Shader" />
+    <None Include="res\shader\Grass.shader" />
     <None Include="res\shader\skybox.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
     <None Include="src\vendor\glm\detail\func_common_simd.inl" />
@@ -337,6 +339,7 @@
     <None Include="src\vendor\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\gameOjbects\BlockObject\Plane.h" />
     <ClInclude Include="src\gameOjbects\ObjectManager.h" />
     <ClInclude Include="src\gameOjbects\AbstractObject.h" />
     <ClInclude Include="src\gameOjbects\SpriteObject\Quad.h" />

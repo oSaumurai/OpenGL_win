@@ -4,10 +4,8 @@
 class Grass :public Quad
 {
 public:
-	Grass();
-	~Grass();
+	Grass() { BindTexture("res/textures/grass.png"); };
+	~Grass() {};
 
-	void Update() override;
-private:
-
+	void Update() override {};
 };

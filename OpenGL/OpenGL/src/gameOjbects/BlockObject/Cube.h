@@ -55,8 +55,8 @@ public:
 	Cube();
 	~Cube();
 
-	void Update() override;
+	virtual void Update() override;
 private:
-    void SetupMesh();
+    virtual void SetupMesh();
 };
 
