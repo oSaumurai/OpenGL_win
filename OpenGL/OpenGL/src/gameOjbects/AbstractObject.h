@@ -8,7 +8,7 @@
 #include "Shader.h"
 
 #include <memory>
-//The default Mesh has only 
+
 class AbstractObject {
 
 public:
@@ -19,7 +19,7 @@ public:
 	std::unique_ptr<Texture> m_Texture;
 
 	virtual void Update() = 0;
-	void Draw(Shader& shader);
+	virtual void Draw(Shader& shader);
 
 protected:
 	void BindTexture(const char* filepath);

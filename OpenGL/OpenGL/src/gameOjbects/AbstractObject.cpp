@@ -3,7 +3,7 @@
 void AbstractObject::Draw(Shader& shader)
 {
     shader.Bind();
-    shader.SetUniform1i("u_Texture", 0);
+    //shader.SetUniform1i("u_Texture", 0);
     m_Texture->Bind();
     Renderer renderer;
     renderer.DrawCube(*m_VAO, shader);

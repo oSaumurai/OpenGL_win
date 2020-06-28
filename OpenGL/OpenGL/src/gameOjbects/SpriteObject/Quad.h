@@ -26,7 +26,7 @@ public:
 	~Quad();
 
 	virtual void Update() = 0;
-
+	virtual void Draw(Shader& shader) override;
 protected:
 	void SetupMesh() override;
 };

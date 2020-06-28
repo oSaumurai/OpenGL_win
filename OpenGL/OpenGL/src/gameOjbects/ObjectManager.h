@@ -4,7 +4,7 @@
 #include "glm/glm.hpp"
 #include "glm/gtc/matrix_transform.hpp"
 
-#include "Skybox.h"
+#include "Skybox/Skybox.h"
 #include "SpriteObject/Grass.h"
 #include "BlockObject/Cube.h"
 #include "levelLoader/Model.h"

@@ -47,3 +47,10 @@ void Renderer::DrawCube(const VertexArray& va, const Shader& shader) const
     va.Bind();
     GLCall(glDrawArrays(GL_TRIANGLES, 0, 36));
 }
+
+void Renderer::DrawTriangle(const VertexArray& va, const Shader& shader) const
+{
+    shader.Bind();
+    va.Bind();
+    GLCall(glDrawArrays(GL_TRIANGLE_STRIP, 0, 4));
+}

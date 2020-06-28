@@ -154,10 +154,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\opengl_core\FrameBuffer.cpp" />
     <ClCompile Include="src\gameOjbects\BlockObject\Plane.cpp" />
     <ClCompile Include="src\gameOjbects\ObjectManager.cpp" />
     <ClCompile Include="src\gameOjbects\AbstractObject.cpp" />
-    <ClCompile Include="src\gameOjbects\SpriteObject\Grass.cpp" />
     <ClCompile Include="src\gameOjbects\SpriteObject\Quad.cpp" />
     <ClCompile Include="src\gameOjbects\BlockObject\Cube.cpp" />
     <ClCompile Include="src\gameOjbects\BlockObject\projectile.cpp" />
@@ -173,7 +173,7 @@
     <ClCompile Include="src\opengl_core\IndexBuffer.cpp" />
     <ClCompile Include="src\Main.cpp" />
     <ClCompile Include="src\opengl_core\Renderer.cpp" />
-    <ClCompile Include="src\gameOjbects\Skybox.cpp" />
+    <ClCompile Include="src\gameOjbects\Skybox\Skybox.cpp" />
     <ClCompile Include="src\opengl_core\Shader.cpp" />
     <ClCompile Include="src\tests\Test.cpp" />
     <ClCompile Include="src\tests\TestClearColor.cpp" />
@@ -194,12 +194,14 @@
     <ClCompile Include="src\opengl_core\VertexBuffer.cpp" />
     <ClCompile Include="src\window\Window.cpp" />
     <ClCompile Include="src\texutureFactory\TextureFactory.cpp" />
+    <ClCompile Include="src\opengl_core\Texture_Depthmap.cpp" />
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Assimp.shader" />
     <None Include="res\shader\Basic.shader" />
-    <None Include="res\shader\Cube.Shader" />
+    <None Include="res\shader\debug_quad.shader" />
     <None Include="res\shader\Grass.shader" />
+    <None Include="res\shader\shadowmap.shader" />
     <None Include="res\shader\skybox.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
     <None Include="src\vendor\glm\detail\func_common_simd.inl" />
@@ -339,6 +341,9 @@
     <None Include="src\vendor\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\gameOjbects\SpriteObject\Quad_NDC.h" />
+    <ClInclude Include="src\opengl_core\FrameBuffer.h" />
+    <ClInclude Include="res\shader\shadowmap_depth.shader" />
     <ClInclude Include="src\gameOjbects\BlockObject\Plane.h" />
     <ClInclude Include="src\gameOjbects\ObjectManager.h" />
     <ClInclude Include="src\gameOjbects\AbstractObject.h" />
@@ -366,8 +371,7 @@
     <ClInclude Include="src\LevelLoader\LevelLoader.h" />
     <ClInclude Include="src\opengl_core\IndexBuffer.h" />
     <ClInclude Include="src\opengl_core\Renderer.h" />
-    <ClInclude Include="src\gameOjbects\grass.h" />
-    <ClInclude Include="src\gameOjbects\Skybox.h" />
+    <ClInclude Include="src\gameOjbects\Skybox\Skybox.h" />
     <ClInclude Include="src\opengl_core\Shader.h" />
     <ClInclude Include="src\tests\Test.h" />
     <ClInclude Include="src\tests\TestClearColor.h" />
@@ -672,6 +676,7 @@
     <ClInclude Include="src\opengl_core\VertexBufferLayout.h" />
     <ClInclude Include="src\window\Window.h" />
     <ClInclude Include="src\texutureFactory\TextureFactory.h" />
+    <ClInclude Include="src\opengl_core\Texture_Depthmap.h" />
   </ItemGroup>
   <ItemGroup>
     <Text Include="Todo.txt" />
