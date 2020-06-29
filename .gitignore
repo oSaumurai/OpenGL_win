@@ -353,3 +353,4 @@ MigrationBackup/
 /OpenGL/OpenGL/src/vendor/glm/out/build/x64-Debug (default)/.cmake/api/v1/reply
 
 /OpenGL/OpenGL/res/object
+/OpenGL/OpenGL/res/textures

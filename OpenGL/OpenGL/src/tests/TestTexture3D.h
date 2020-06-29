@@ -33,7 +33,10 @@ struct mesh
     {
         std::ifstream f(filename);
         if (!f.is_open())
+        {
+            std::cout << "failed loading file" << filename << std::endl;
             return false;
+        }
 
         while (!f.eof())
         {

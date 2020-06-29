@@ -79,6 +79,7 @@ void Game::Update()
 
     /* Swap front and back buffers */
     /* Poll for and process events */
+    glGetError();
     GLCall(glfwSwapBuffers(window));
     GLCall(glfwPollEvents());
 }
