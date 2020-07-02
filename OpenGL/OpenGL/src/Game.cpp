@@ -36,7 +36,8 @@ void Game::initTestMember()
 	testMenu->RegisterTest<test::TestClearColor>("Clear Color");
 	testMenu->RegisterTest<test::TestTexture2D>("Texture 2D");
 	testMenu->RegisterTest<test::TestTexture3D>("Texture 3D");
-	testMenu->RegisterTest<test::TestLoader>("Scene loader");
+	testMenu->RegisterTest<test::TestLoader>("ShadowMapping");
+    testMenu->RegisterTest<test::TestPointShadow>("Point Shadow");
 }
 
 void Game::LoadContent()

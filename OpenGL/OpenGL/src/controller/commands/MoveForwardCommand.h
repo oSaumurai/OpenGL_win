@@ -3,7 +3,7 @@
 class MoveForwardCommand : public ICommand
 {
 public:
-	MoveForwardCommand(Camera* Camera) {
+	MoveForwardCommand(Camera*& Camera) {
 		camera = Camera;
 	}
 

@@ -3,50 +3,6 @@
 
 Skybox::Skybox(std::string filepath)
 {
-    float skyboxVertices[] = {
-        // positions          
-        -1.0f,  1.0f, -1.0f,
-        -1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-         1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
-
-        -1.0f, -1.0f,  1.0f,
-        -1.0f, -1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f, -1.0f,
-        -1.0f,  1.0f,  1.0f,
-        -1.0f, -1.0f,  1.0f,
-
-         1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-
-        -1.0f, -1.0f,  1.0f,
-        -1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f, -1.0f,  1.0f,
-        -1.0f, -1.0f,  1.0f,
-
-        -1.0f,  1.0f, -1.0f,
-         1.0f,  1.0f, -1.0f,
-         1.0f,  1.0f,  1.0f,
-         1.0f,  1.0f,  1.0f,
-        -1.0f,  1.0f,  1.0f,
-        -1.0f,  1.0f, -1.0f,
-
-        -1.0f, -1.0f, -1.0f,
-        -1.0f, -1.0f,  1.0f,
-         1.0f, -1.0f, -1.0f,
-         1.0f, -1.0f, -1.0f,
-        -1.0f, -1.0f,  1.0f,
-         1.0f, -1.0f,  1.0f
-    };
     std::vector<std::string> faces
     {
         (filepath + "/right.jpg"),
@@ -80,7 +36,7 @@ void Skybox::Draw(Shader& shader)
     GLCall(glBindTexture(GL_TEXTURE_CUBE_MAP, m_RenderID));
     renderer.DrawCube(*m_VAO, shader);
     m_VAO->UnBind(); 
-   // GLCall(glActiveTexture(GL_TEXTURE0));
+    //GLCall(glBindTexture(GL_TEXTURE_CUBE_MAP, 0));
 }
 
 void Skybox::LoadFromFile(std::vector<std::string> faces)

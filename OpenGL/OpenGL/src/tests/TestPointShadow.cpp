@@ -1,4 +1,4 @@
-#include "TestLoader.h"
+#include "TestPointShadow.h"
 #include "Renderer.h"
 #include "imgui/imgui.h"
 
@@ -8,7 +8,7 @@
 #include <iostream>
 namespace test {
 
-    TestLoader::TestLoader()
+    TestPointShadow::TestPointShadow()
         :m_Translation(0, 0, 0), m_Rotation(0.0, 0.0, 0.0),
         m_Proj(glm::perspective(glm::radians(viewAngle), 1280.0f / 720.0f, 0.1f, 100.0f)),
         m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, -6.0f))),
@@ -16,15 +16,16 @@ namespace test {
         skybox_shader("res/shader/skybox.shader"),
         Grass_shader("res/shader/Grass.shader"),
         debug_quad("res/shader/debug_quad.shader"),
-        DepthShader("res/shader/shadowmap_depth.shader"),
-        shadowMap_shader("res/shader/shadowmap.shader"),
-        light_Pos(glm::vec3(2.0, 9.0, 4.0))
+        DepthShader("res/shader/pointshadow_depth.shader"),
+        shadowMap_shader("res/shader/pointshadow.shader"),
+        light_Pos(glm::vec3(-5.0, 0.0, 0.0))
     {        
         camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f));
+        shadows_Switch = new bool(true);
         //model = std::make_unique<Model>("res/object/Tree1/Tree1.obj");
         //grass = std::make_unique<Grass>();
         alice = std::make_unique<Cube>();
-        plane = std::make_unique<Plane>();
+        //plane = std::make_unique<Plane>();
         quad_NDC = std::make_unique<Quad_NDC>();
         skybox = std::make_unique<Skybox>("res/object/skybox");
         //model = std::make_unique<Model>("res/object/beach/obj/scene.obj");
@@ -38,37 +39,41 @@ namespace test {
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GLCall(glEnable(GL_BLEND));
         GLCall(glEnable(GL_DEPTH_TEST));
-
-
+        GLCall(glEnable(GL_CULL_FACE));
         const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
 
         GLCall(glGenFramebuffers(1, &depthMapFBO));
         // create depth texture
         GLCall(glGenTextures(1, &depthMap));
-        GLCall(glBindTexture(GL_TEXTURE_2D, depthMap));
-        GLCall(glTexImage2D(GL_TEXTURE_2D, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL));
-        GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_NEAREST));
-        GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_NEAREST));
-        GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_BORDER));
-        GLCall(glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_BORDER));
-        float borderColor[] = { 1.0,1.0,1.0,1.0 };
-        glTexParameterfv(GL_TEXTURE_2D,GL_TEXTURE_BORDER_COLOR,borderColor);
+        GLCall(glBindTexture(GL_TEXTURE_CUBE_MAP, depthMap));
+        for (unsigned int i = 0; i < 6; i++) {
+            glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_DEPTH_COMPONENT, SHADOW_WIDTH, SHADOW_HEIGHT, 0, GL_DEPTH_COMPONENT, GL_FLOAT, NULL);
+        }
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_NEAREST);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+        glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE);
+
+        //float borderColor[] = { 1.0,1.0,1.0,1.0 };
+        //glTexParameterfv(GL_TEXTURE_2D,GL_TEXTURE_BORDER_COLOR,borderColor);
         // attach depth texture as FBO's depth buffer
         GLCall(glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO));
-        GLCall(glFramebufferTexture2D(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, GL_TEXTURE_2D, depthMap, 0));
+        GLCall(glFramebufferTexture(GL_FRAMEBUFFER, GL_DEPTH_ATTACHMENT, depthMap, 0));
         GLCall(glDrawBuffer(GL_NONE));
         GLCall(glReadBuffer(GL_NONE));
         GLCall(glBindFramebuffer(GL_FRAMEBUFFER, 0));
     }
 
-    TestLoader::~TestLoader()
+    TestPointShadow::~TestPointShadow()
     {
         std::cout << "keyboard unloaded" << std::endl;
         keyboardController->UnRegisterCommand();
         delete camera;
+        delete shadows_Switch;
     }
 
-    void TestLoader::OnUpdate(float deltaTime)
+    void TestPointShadow::OnUpdate(float deltaTime)
     {
         camera->updateCameraVectors();
         m_View = camera->GetViewMartix();
@@ -90,49 +95,39 @@ namespace test {
 
         //skybox translation
         glm::mat4 model_skybox = glm::mat4(1.0f);
-        model_skybox = glm::scale(model_skybox, glm::vec3(100, 100, 100));
+        model_skybox = glm::scale(model_skybox, glm::vec3(10, 10, 10));
         glm::mat4 mvp_skybox = m_Proj * m_View * model_skybox;
         skybox_shader.Bind();
         skybox_shader.SetUniformMat4f("u_MVP", mvp_skybox);
-
-
     }
-    void TestLoader::OnRender()
+    
+    void TestPointShadow::OnRender()
     {       
-        glDepthFunc(GL_LEQUAL);
-        //skybox->Draw(skybox_shader);
-        glDepthFunc(GL_LESS);
-        //model->Draw(m_shader);
+        float near_plane = 1.0f;
+        float far_plane = 35.0f;
+        glm::mat4 shadowProj = glm::perspective(glm::radians(90.0f), (float)1024 / (float)1024, near_plane, far_plane);
+        std::vector<glm::mat4> shadowTransforms;
+        shadowTransforms.push_back(shadowProj * glm::lookAt(light_Pos, light_Pos + glm::vec3(1.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
+        shadowTransforms.push_back(shadowProj * glm::lookAt(light_Pos, light_Pos + glm::vec3(-1.0f, 0.0f, 0.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
+        shadowTransforms.push_back(shadowProj * glm::lookAt(light_Pos, light_Pos + glm::vec3(0.0f, 1.0f, 0.0f), glm::vec3(0.0f, 0.0f, 1.0f)));
+        shadowTransforms.push_back(shadowProj * glm::lookAt(light_Pos, light_Pos + glm::vec3(0.0f, -1.0f, 0.0f), glm::vec3(0.0f, 0.0f, -1.0f)));
+        shadowTransforms.push_back(shadowProj * glm::lookAt(light_Pos, light_Pos + glm::vec3(0.0f, 0.0f, 1.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
+        shadowTransforms.push_back(shadowProj * glm::lookAt(light_Pos, light_Pos + glm::vec3(0.0f, 0.0f, -1.0f), glm::vec3(0.0f, -1.0f, 0.0f)));
 
-        //shadow map
-        debug_quad.Bind();
-        debug_quad.SetUniform1i("depthMap", 0);
-
-        glm::mat4 lightProjection, lightView;
-        glm::mat4 lightSpaceMatrix;
-        float near_plane = 1.0f, far_plane = 15.0f;
-        lightProjection = glm::ortho(-10.0f, 10.0f, -10.0f, 10.0f, near_plane, far_plane);
-        lightView = glm::lookAt(light_Pos, glm::vec3(0.0f), glm::vec3(0.0, 1.0, 0.0));
-        lightSpaceMatrix = lightProjection * lightView;
         DepthShader.Bind();
-        DepthShader.SetUniformMat4f("lightSpaceMatrix", lightSpaceMatrix);
+        for (unsigned int i = 0; i < 6; ++i)
+            DepthShader.SetUniformMat4f("shadowMatrices[" + std::to_string(i) + "]", shadowTransforms[i]);
+        DepthShader.SetUniform1f("far_plane", far_plane);
+        DepthShader.SetUniformVec3("lightPos", light_Pos);
 
         glViewport(0, 0, 1024, 1024);
         glBindFramebuffer(GL_FRAMEBUFFER, depthMapFBO);
         glClear(GL_DEPTH_BUFFER_BIT);
-        //glActiveTexture(GL_TEXTURE0);
-        //
-        glm::mat4 model = glm::mat4(1.0);
-        DepthShader.SetUniformMat4f("model", model);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, depthMap);
-        //
-        plane->Draw(DepthShader);
-        glBindTexture(GL_TEXTURE_2D, 0);
-        glCullFace(GL_FRONT);
-        RenderScene(DepthShader);
-        glCullFace(GL_BACK);
-        //grass->Draw(Grass_shader);
+
+            glCullFace(GL_FRONT);
+            RenderScene(DepthShader);
+            glCullFace(GL_BACK);
+
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
 
         //////
@@ -142,38 +137,31 @@ namespace test {
         /////
         shadowMap_shader.Bind();
         shadowMap_shader.SetUniform1i("diffuseTexture", 0);
-        shadowMap_shader.SetUniform1i("shadowMap", 1);
+        shadowMap_shader.SetUniform1i("depthMap", 1);
         shadowMap_shader.SetUniformMat4f("projection", m_Proj);
         shadowMap_shader.SetUniformMat4f("view", m_View);
         // set light uniforms
         shadowMap_shader.SetUniformVec3("viewPos", camera->GetPosition());
         shadowMap_shader.SetUniformVec3("lightPos", light_Pos);
-        shadowMap_shader.SetUniformMat4f("lightSpaceMatrix", lightSpaceMatrix);
-
-        shadowMap_shader.SetUniformMat4f("model", model);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, depthMap);
-        plane->Draw(shadowMap_shader);
-        glBindTexture(GL_TEXTURE_2D, 0);
+        shadowMap_shader.SetUniform1i("shadows", 1);
+        shadowMap_shader.SetUniform1f("far_plane", far_plane);
 
 
+        GLCall(glActiveTexture(GL_TEXTURE1));
+        GLCall(glBindTexture(GL_TEXTURE_CUBE_MAP, depthMap));
         RenderScene(shadowMap_shader);
 
-        glDepthFunc(GL_LEQUAL);
-        skybox->Draw(skybox_shader);
-        glDepthFunc(GL_LESS);
-
         //debug usage
-        debug_quad.Bind();
+        //debug_quad.Bind();
         //debug_quad.SetUniform1f("near_plane", near_plane);
         //debug_quad.SetUniform1f("far_plane", far_plane);
-        glActiveTexture(GL_TEXTURE0);
-        glBindTexture(GL_TEXTURE_2D, depthMap);
+        //glActiveTexture(GL_TEXTURE0);
+        //glBindTexture(GL_TEXTURE_2D, depthMap);
         //quad_NDC->Draw(debug_quad);
         
     }
 
-    void TestLoader::OnImGuiRender()
+    void TestPointShadow::OnImGuiRender()
     {
         // Create a window called "Hello, world!" and append into it.
         ImGui::Begin("Hello, world!");
@@ -188,46 +176,41 @@ namespace test {
         ImGui::End();
     }
 
-    void TestLoader::RenderScene(Shader& shader)
+    void TestPointShadow::RenderScene(Shader& shader)
     {
         
         glm::mat4 model = glm::mat4(1.0f);
-        /*shader.SetUniformMat4f("model", model);        
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, depthMap);
-        plane->Draw(shader); 
-        glBindTexture(GL_TEXTURE_2D, 0);*/
-
+        shader.Bind();
+        glDisable(GL_CULL_FACE);
+        model = glm::scale(model, glm::vec3(15.0f));
+        shader.SetUniformMat4f("model", model);
+        shader.SetUniform1i("reverse_normals", 1); // A small little hack to invert normals when drawing cube from the inside so lighting still works.
+        alice->Draw(shader);
+        //skybox->Draw(shader);
+        shader.SetUniform1i("reverse_normals", 0); // and of course disable it
+        glEnable(GL_CULL_FACE);
         /////
         //glCullFace(GL_FRONT);
         model = glm::mat4(1.0f);   
         model = glm::translate(model, glm::vec3(0.0, 0.5, 0.0));
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, depthMap);
         shader.SetUniformMat4f("model", model);
         alice->Draw(shader);
-        glBindTexture(GL_TEXTURE_2D, 0);
 
         model = glm::translate(model, glm::vec3(3.0, 3.0, 0.0));
         //glm::mat4 mvp = m_Proj * m_View * model;
         shader.SetUniformMat4f("model", model);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, depthMap);
         alice->Draw(shader);
-        glBindTexture(GL_TEXTURE_2D, 0);
+
 
         model = glm::translate(model, glm::vec3(-3.0, 4.0, -1.0));
         //mvp = m_Proj * m_View * model;
         shader.SetUniformMat4f("model", model);
-        glActiveTexture(GL_TEXTURE1);
-        glBindTexture(GL_TEXTURE_2D, depthMap);
         alice->Draw(shader);
-        glBindTexture(GL_TEXTURE_2D, 0);
 
         //glCullFace(GL_BACK);
     }
 
-    void TestLoader::ResetPosition()
+    void TestPointShadow::ResetPosition()
     {
         m_Translation = glm::vec3(0, 0, 0);
         m_Rotation = glm::vec3(0, 0, 0);
@@ -236,7 +219,7 @@ namespace test {
         camera->ResetPosition();
     }
 
-    void TestLoader::InitController()
+    void TestPointShadow::InitController()
     {
         std::cout << "keyboard Reloaded" << std::endl;
         keyboardController->RegisterCommand(GLFW_KEY_W, new MoveForwardCommand(camera));
@@ -245,9 +228,10 @@ namespace test {
         keyboardController->RegisterCommand(GLFW_KEY_D, new MoveRightCommand(camera));
         keyboardController->RegisterCommand(GLFW_KEY_SPACE, new MoveUpCommand(camera));
         keyboardController->RegisterCommand(GLFW_KEY_Q, new MoveDownCommand(camera));
+        keyboardController->RegisterCommand(GLFW_KEY_1, new ShadowmapSwitchCommand(shadows_Switch));
     }
 
-    void TestLoader::UnRegisterController() 
+    void TestPointShadow::UnRegisterController() 
     {
         keyboardController->UnRegisterCommand();
     }

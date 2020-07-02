@@ -138,6 +138,9 @@
     <ClCompile Include="src\gameOjbects\Skybox\Skybox.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\tests\TestPointShadow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
@@ -554,6 +557,8 @@
     <None Include="res\shader\Grass.shader" />
     <None Include="res\shader\shadowmap.shader" />
     <None Include="res\shader\debug_quad.shader" />
+    <None Include="res\shader\pointshadow.shader" />
+    <None Include="res\shader\pointshadow_depth.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\vendor\stb_image\stb_image.h">
@@ -1562,6 +1567,12 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="src\gameOjbects\Skybox\Skybox.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tests\TestPointShadow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\controller\commands\ShadowmapSwitchCommand.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

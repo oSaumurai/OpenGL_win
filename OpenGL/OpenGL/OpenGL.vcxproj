@@ -178,6 +178,7 @@
     <ClCompile Include="src\tests\Test.cpp" />
     <ClCompile Include="src\tests\TestClearColor.cpp" />
     <ClCompile Include="src\tests\TestLoader.cpp" />
+    <ClCompile Include="src\tests\TestPointShadow.cpp" />
     <ClCompile Include="src\tests\TestTexture2D.cpp" />
     <ClCompile Include="src\tests\TestTexture3D.cpp" />
     <ClCompile Include="src\vendor\glm\detail\glm.cpp" />
@@ -201,6 +202,8 @@
     <None Include="res\shader\Basic.shader" />
     <None Include="res\shader\debug_quad.shader" />
     <None Include="res\shader\Grass.shader" />
+    <None Include="res\shader\pointshadow.shader" />
+    <None Include="res\shader\pointshadow_depth.shader" />
     <None Include="res\shader\shadowmap.shader" />
     <None Include="res\shader\skybox.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
@@ -341,6 +344,7 @@
     <None Include="src\vendor\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\controller\commands\ShadowmapSwitchCommand.h" />
     <ClInclude Include="src\gameOjbects\SpriteObject\Quad_NDC.h" />
     <ClInclude Include="src\opengl_core\FrameBuffer.h" />
     <ClInclude Include="res\shader\shadowmap_depth.shader" />
@@ -376,6 +380,7 @@
     <ClInclude Include="src\tests\Test.h" />
     <ClInclude Include="src\tests\TestClearColor.h" />
     <ClInclude Include="src\tests\TestLoader.h" />
+    <ClInclude Include="src\tests\TestPointShadow.h" />
     <ClInclude Include="src\tests\TestTexture2D.h" />
     <ClInclude Include="src\tests\TestTexture3D.h" />
     <ClInclude Include="src\vendor\glm\common.hpp" />
