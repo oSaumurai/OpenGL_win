@@ -9,6 +9,7 @@
 #include "tests/TestTexture3D.h"
 #include "tests/TestLoader.h"
 #include "tests/TestPointShadow.h"
+#include "tests/TestHDR.h"
 
 class Game :public Window
 {

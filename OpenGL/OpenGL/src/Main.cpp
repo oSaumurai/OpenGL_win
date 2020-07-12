@@ -9,7 +9,7 @@
 #include "Game.h"
 int main(void)
 {
-    _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
+   // _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
     // windowShouldClose = window->shouldClose();
     Game* game = new Game();

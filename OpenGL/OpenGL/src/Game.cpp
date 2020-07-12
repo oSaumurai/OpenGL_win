@@ -38,6 +38,7 @@ void Game::initTestMember()
 	testMenu->RegisterTest<test::TestTexture3D>("Texture 3D");
 	testMenu->RegisterTest<test::TestLoader>("ShadowMapping");
     testMenu->RegisterTest<test::TestPointShadow>("Point Shadow");
+    testMenu->RegisterTest<test::TestHDR>("HDR Test");
 }
 
 void Game::LoadContent()
