@@ -4,6 +4,7 @@
 #include "VertexArray.h"
 #include "VertexBuffer.h"
 #include "VertexBufferLayout.h"
+#include "IndexBuffer.h"
 #include "Texture.h"
 #include "Shader.h"
 

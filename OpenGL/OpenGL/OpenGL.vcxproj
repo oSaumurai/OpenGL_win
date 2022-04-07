@@ -47,7 +47,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -154,6 +154,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\gameOjbects\BlockObject\Sphere.cpp" />
     <ClCompile Include="src\ray\Ray.cpp" />
     <ClCompile Include="src\opengl_core\FrameBuffer.cpp" />
     <ClCompile Include="src\gameOjbects\BlockObject\Plane.cpp" />
@@ -206,6 +207,7 @@
     <None Include="res\shader\Grass.shader" />
     <None Include="res\shader\HDR\hdr.shader" />
     <None Include="res\shader\HDR\lighting.shader" />
+    <None Include="res\shader\PBR.shader" />
     <None Include="res\shader\pointshadow.shader" />
     <None Include="res\shader\pointshadow_depth.shader" />
     <None Include="res\shader\shadowmap.shader" />
@@ -348,6 +350,7 @@
     <None Include="src\vendor\glm\gtx\wrap.inl" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\gameOjbects\BlockObject\Sphere.h" />
     <ClInclude Include="src\ray\Ray.h" />
     <ClInclude Include="src\controller\commands\ShadowmapSwitchCommand.h" />
     <ClInclude Include="src\gameOjbects\SpriteObject\Quad_NDC.h" />
