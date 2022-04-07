@@ -94,7 +94,7 @@ namespace test {
 
         /// <summary>
         bool hdr = true;
-        float exposure = 1.0f;
+        float exposure = 0.1f;
         glViewport(0, 0, 1280, 720);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
         hdr_shader.Bind();
