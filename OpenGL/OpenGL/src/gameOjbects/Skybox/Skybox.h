@@ -56,7 +56,7 @@ class Skybox
          1.0f, -1.0f,  1.0f
     };
 public:
-	Skybox(std::string filepath);
+	Skybox(std::string filepath, bool = false);
 	~Skybox();
 
 	void Draw(Shader& shader);
@@ -66,5 +66,5 @@ private:
 	std::unique_ptr<VertexBuffer> m_VBO;
 	std::unique_ptr<IndexBuffer> m_IndexBuffer;
 
-	void LoadFromFile(std::vector<std::string> faces);
+	void LoadFromFile(std::vector<std::string> faces, bool is32bits);
 };

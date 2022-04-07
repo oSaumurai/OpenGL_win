@@ -10,6 +10,7 @@
 #include "tests/TestLoader.h"
 #include "tests/TestPointShadow.h"
 #include "tests/TestHDR.h"
+#include "tests/PBR_Test.h"
 
 class Game :public Window
 {

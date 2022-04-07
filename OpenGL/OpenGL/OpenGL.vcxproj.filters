@@ -147,6 +147,9 @@
     <ClCompile Include="src\tests\TestHDR.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="src\tests\PBR_Test.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="res\shader\Basic.shader" />
@@ -1589,8 +1592,31 @@
     <ClInclude Include="src\tests\TestHDR.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\tests\PBR_Test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Todo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\object\skybox\hdri\back.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\object\skybox\hdri\bottom.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\object\skybox\hdri\front.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\object\skybox\hdri\left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\object\skybox\hdri\right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\object\skybox\hdri\top.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

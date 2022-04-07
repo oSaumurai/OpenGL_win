@@ -39,6 +39,7 @@ void Game::initTestMember()
 	testMenu->RegisterTest<test::TestLoader>("ShadowMapping");
     testMenu->RegisterTest<test::TestPointShadow>("Point Shadow");
     testMenu->RegisterTest<test::TestHDR>("HDR Test");
+    testMenu->RegisterTest<test::PBR_Test>("PBR Test");
 }
 
 void Game::LoadContent()

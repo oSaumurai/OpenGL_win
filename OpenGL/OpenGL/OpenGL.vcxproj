@@ -176,6 +176,7 @@
     <ClCompile Include="src\opengl_core\Renderer.cpp" />
     <ClCompile Include="src\gameOjbects\Skybox\Skybox.cpp" />
     <ClCompile Include="src\opengl_core\Shader.cpp" />
+    <ClCompile Include="src\tests\PBR_Test.cpp" />
     <ClCompile Include="src\tests\Test.cpp" />
     <ClCompile Include="src\tests\TestClearColor.cpp" />
     <ClCompile Include="src\tests\TestLoader.cpp" />
@@ -382,6 +383,7 @@
     <ClInclude Include="src\opengl_core\Renderer.h" />
     <ClInclude Include="src\gameOjbects\Skybox\Skybox.h" />
     <ClInclude Include="src\opengl_core\Shader.h" />
+    <ClInclude Include="src\tests\PBR_Test.h" />
     <ClInclude Include="src\tests\Test.h" />
     <ClInclude Include="src\tests\TestClearColor.h" />
     <ClInclude Include="src\tests\TestLoader.h" />
@@ -691,6 +693,14 @@
   </ItemGroup>
   <ItemGroup>
     <Text Include="Todo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\object\skybox\hdri\back.png" />
+    <Image Include="res\object\skybox\hdri\bottom.png" />
+    <Image Include="res\object\skybox\hdri\front.png" />
+    <Image Include="res\object\skybox\hdri\left.png" />
+    <Image Include="res\object\skybox\hdri\right.png" />
+    <Image Include="res\object\skybox\hdri\top.png" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
