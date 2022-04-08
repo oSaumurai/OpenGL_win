@@ -38,7 +38,7 @@ namespace test {
 		Shader debug_quad{"res/shader/debug_quad.shader"};
 		Shader DepthShader{ "res/shader/shadowmap_depth.shader" };
 		Shader shadowMap_shader{ "res/shader/shadowmap.shader" };
-		Shader PBR_shader{ "res/shader/PBR.shader " };
+		//Shader PBR_shader{ "res/shader/PBR.shader " };
 
 		//Texture albedo   { "res/object/PBR/albedo.png" };
 		//Texture normal   { "res/object/PBR/normal.png" };

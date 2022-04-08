@@ -23,6 +23,12 @@ uniform samplerCube skybox;
 
 void main()
 {
+    const float gamma = 2.6;
+    vec3 hdrColor = texture(skybox, TexCoords).rgb;
+    vec3 mapped = hdrColor / (hdrColor + vec3(1.0));
+    mapped = pow(mapped, vec3(1.0 / gamma));
+
     FragColor = vec4(0.0, 0.0, 0.0, 1.0);
-    FragColor.rgb = texture(skybox, TexCoords).rgb;
+    //FragColor.rgb = texture(skybox, TexCoords).rgb;
+    FragColor = vec4(mapped, 1.0);
 }

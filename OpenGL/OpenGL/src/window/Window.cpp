@@ -7,14 +7,14 @@ Window::Window()
     initGLfw();
     initOpenGLOption();
 
-    window = glfwCreateWindow(window_height, window_witdth, "My GLLLL", NULL, NULL);
+    window = glfwCreateWindow( window_witdth, window_height, "My GLLLL", NULL, NULL);
     /* Make the window's context current */
     glfwMakeContextCurrent(window);
     glfwSwapInterval(1);
 
     initGLew();
     initGUI();
-    glViewport(0, 0, window_height, window_witdth);
+    glViewport(0, 0, window_witdth, window_height);
 }
 
 Window::~Window()

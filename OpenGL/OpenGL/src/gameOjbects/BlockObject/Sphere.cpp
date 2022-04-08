@@ -1,5 +1,5 @@
 #include "Sphere.h"
-
+#include <iostream>
 Sphere::Sphere() {
     SetupTriangle();
     SetupMesh();
@@ -100,10 +100,10 @@ void Sphere::SetupMesh()
 
     //glBindVertexArray(m_VAO);
 
-    Position = glm::vec3(0.0, 0.0, 0.0);
+    Position = glm::vec3(0.0, 1.0, 0.0);
     VertexBufferLayout layout;
     m_VAO = std::make_unique<VertexArray>();
-    m_VBO = std::make_unique<VertexBuffer>(&data[0], sizeof(data));
+    m_VBO = std::make_unique<VertexBuffer>(&data[0], sizeof(float) * data.size());
     ib = std::make_unique<IndexBuffer>(&indices[0], indexCount);
     layout.Push<float>(3);
     layout.Push<float>(3);
@@ -114,8 +114,8 @@ void Sphere::SetupMesh()
 void Sphere::Draw(Shader& shader)
 {
     shader.Bind();
-    m_VAO->Bind();
     ib->Bind();
+    m_VAO->Bind();
     //shader.SetUniform1i("u_Texture", 0);
     //m_Texture->Bind();
     glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);

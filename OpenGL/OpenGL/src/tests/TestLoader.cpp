@@ -151,8 +151,8 @@ namespace test {
 
 
 
-        PBR_shader.Bind();
-        PBR_shader.SetUniform1i("albedoMap", 0);
+        //PBR_shader.Bind();
+       /* PBR_shader.SetUniform1i("albedoMap", 0);
         PBR_shader.SetUniform1i("normalMap", 1);
         PBR_shader.SetUniform1i("metallicMap", 2);
         PBR_shader.SetUniform1i("roughnessMap", 3);
@@ -160,7 +160,7 @@ namespace test {
 
         PBR_shader.SetUniformMat4f("projection", m_Proj);
         PBR_shader.SetUniformMat4f("view", m_View);
-        PBR_shader.SetUniformVec3("camPos", camera->GetPosition());
+        PBR_shader.SetUniformVec3("camPos", camera->GetPosition());*/
 
       /*  albedo.Bind(0);
         normal.Bind(1);
@@ -178,14 +178,14 @@ namespace test {
         {
             glm::vec3 newPos = lightPositions[i] + glm::vec3(sin(glfwGetTime() * 5.0) * 5.0, 0.0, 0.0);
             newPos = lightPositions[i];
-            PBR_shader.SetUniformVec3("lightPositions[" + std::to_string(i) + "]", newPos);
-            PBR_shader.SetUniformVec3("lightColors[" + std::to_string(i) + "]", lightColors[i]);
+            //PBR_shader.SetUniformVec3("lightPositions[" + std::to_string(i) + "]", newPos);
+            //PBR_shader.SetUniformVec3("lightColors[" + std::to_string(i) + "]", lightColors[i]);
 
             model = glm::mat4(1.0f);
             model = glm::translate(model, newPos);
             model = glm::scale(model, glm::vec3(0.5f));
-            PBR_shader.SetUniformMat4f("model", model);
-            sphere->Draw(PBR_shader);
+            //PBR_shader.SetUniformMat4f("model", model);
+            //sphere->Draw(PBR_shader);
         }
 
         //RenderScene(shadowMap_shader);

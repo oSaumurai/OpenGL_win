@@ -3,24 +3,32 @@
 
 Skybox::Skybox(std::string filepath, bool is32Bits)
 {
-    //std::vector<std::string> faces
-    //{
-    //    (filepath + "/right.jpg"),
-    //    (filepath + "/left.jpg"),
-    //    (filepath + "/top.jpg"),
-    //    (filepath + "/bottom.jpg"),
-    //    (filepath + "/back.jpg"),
-    //    (filepath + "/front.jpg"),
-    //};
-    std::vector<std::string> faces
+    std::vector<std::string> faces;
+    if (!is32Bits) 
     {
-        (filepath + "/right.png"),
-        (filepath + "/left.png"),
-        (filepath + "/top.png"),
-        (filepath + "/bottom.png"),
-        (filepath + "/back.png"),
-        (filepath + "/front.png"),
-    };
+        faces =
+        {
+            (filepath + "/right.jpg"),
+            (filepath + "/left.jpg"),
+            (filepath + "/top.jpg"),
+            (filepath + "/bottom.jpg"),
+            (filepath + "/back.jpg"),
+            (filepath + "/front.jpg"),
+        };
+    }
+    else 
+    {
+        faces = 
+        {
+            (filepath + "/right.png"),
+            (filepath + "/left.png"),
+            (filepath + "/top.png"),
+            (filepath + "/bottom.png"),
+            (filepath + "/back.png"),
+            (filepath + "/front.png"),
+        };
+    }
+   
     m_VAO = std::make_unique<VertexArray>();
     m_VBO = std::make_unique<VertexBuffer>(skyboxVertices, sizeof(skyboxVertices));
 
@@ -74,6 +82,7 @@ void Skybox::LoadFromFile(std::vector<std::string> faces, bool is32Bits)
             }
             else
             {
+                //glTextureStorage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, data);
                 GLCall(glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGBA32F, width, height, 0, GL_RGBA, GL_FLOAT, data));
             }
             stbi_image_free(data);
@@ -84,11 +93,13 @@ void Skybox::LoadFromFile(std::vector<std::string> faces, bool is32Bits)
             stbi_image_free(data);
         }
     }
-    /*GLCall(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
-    GLCall(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR));*/
+    glEnable(GL_TEXTURE_CUBE_MAP_SEAMLESS);
+    glGenerateMipmap(GL_TEXTURE_CUBE_MAP);
     GLCall(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MIN_FILTER, GL_LINEAR));
     GLCall(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAG_FILTER, GL_LINEAR));
     GLCall(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE));
     GLCall(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE));
     GLCall(glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_WRAP_R, GL_CLAMP_TO_EDGE));
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_BASE_LEVEL, 0);
+    glTexParameteri(GL_TEXTURE_CUBE_MAP, GL_TEXTURE_MAX_LEVEL, 0);
 }
