@@ -574,6 +574,10 @@
     <None Include="res\shader\HDR\lighting.shader" />
     <None Include="res\shader\HDR\hdr.shader" />
     <None Include="res\shader\PBR.shader" />
+    <None Include="res\shader\irradiance.shader" />
+    <None Include="res\shader\prefilter.shader" />
+    <None Include="res\shader\BRDF.shader" />
+    <None Include="res\shader\pbr1.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\vendor\stb_image\stb_image.h">

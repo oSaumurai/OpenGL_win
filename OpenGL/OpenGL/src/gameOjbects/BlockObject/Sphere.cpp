@@ -99,9 +99,6 @@ void Sphere::SetupMesh()
     //}
 
     //glBindVertexArray(m_VAO);
-
-    Position = glm::vec3(0.0, 1.0, 0.0);
-    VertexBufferLayout layout;
     m_VAO = std::make_unique<VertexArray>();
     m_VBO = std::make_unique<VertexBuffer>(&data[0], sizeof(float) * data.size());
     ib = std::make_unique<IndexBuffer>(&indices[0], indexCount);
@@ -113,15 +110,13 @@ void Sphere::SetupMesh()
 
 void Sphere::Draw(Shader& shader)
 {
+    m_VAO->AddBuffer(*m_VBO, layout);
     shader.Bind();
     ib->Bind();
     m_VAO->Bind();
-    //shader.SetUniform1i("u_Texture", 0);
-    //m_Texture->Bind();
-    glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0);
+    GLCall(glDrawElements(GL_TRIANGLE_STRIP, indexCount, GL_UNSIGNED_INT, 0));
     m_VAO->UnBind();
     ib->UnBind();
-;   m_Texture->UnBind();
 }
 
 void Sphere::Update()

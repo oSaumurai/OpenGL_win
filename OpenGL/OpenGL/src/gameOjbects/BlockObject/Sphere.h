@@ -5,15 +5,19 @@
 #include "VertexArray.h"
 #include "gameOjbects/AbstractObject.h"
 #include "IndexBuffer.h"
-class Sphere : public AbstractObject{
+class Sphere{
 public:
     Sphere();
     ~Sphere();
 
-    void SetupMesh() override;
-    void Draw(Shader& shader) override;
-    void Update() override;
+    void Draw(Shader& shader);
+    void Update() ;
 private:
+    std::unique_ptr<VertexArray> m_VAO;
+    std::unique_ptr<VertexBuffer> m_VBO;
+
+    VertexBufferLayout layout;
+    void SetupMesh();
     void SetupTriangle();
     std::vector<float> data;
     unsigned int indexCount;

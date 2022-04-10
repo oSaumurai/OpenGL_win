@@ -28,7 +28,7 @@ void main()
     vec3 mapped = hdrColor / (hdrColor + vec3(1.0));
     mapped = pow(mapped, vec3(1.0 / gamma));
 
-    FragColor = vec4(0.0, 0.0, 0.0, 1.0);
+    //FragColor = vec4(0.0, 0.0, 0.0, 1.0);
     //FragColor.rgb = texture(skybox, TexCoords).rgb;
     FragColor = vec4(mapped, 1.0);
 }

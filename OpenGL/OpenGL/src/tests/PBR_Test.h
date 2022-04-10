@@ -24,22 +24,47 @@ namespace test {
 		KeyboardController* keyboardController;
 		Camera* camera;
 
+		unsigned int captureFBO;
+		unsigned int captureRBO;
+		unsigned int envCubemap;
+		unsigned int irradianceMap;
+		unsigned int prefilterMap;
+		unsigned int brdfLUTTexture;
+		unsigned int quadVAO = 0;
+		unsigned int quadVBO;
+
 		Shader skybox_shader{ "res/shader/skybox.shader" };
 		Shader PBR_shader{ "res/shader/PBR.shader" };
-		Skybox skybox{ "res/object/skybox/hdri", true};
+		Shader pbr1_shader{ "res/shader/pbr1.shader" };
+		Shader model_shader{ "res/shader/Assimp.shader" };
+		Shader irradianceShader{ "res/shader/irradiance.shader" };
+		Shader prefilterShader{ "res/shader/prefilter.shader" };
+		Shader BRDF_shader{ "res/shader/BRDF.shader" };
 
+		// objects //
+		Skybox skybox{ "res/object/skybox/hdri", true };
+		Model potion{ "res/object/potion/scene.gltf" };
 		Sphere sphere{};
-		Texture albedo   { "res/object/PBR/albedo.png" };
-		Texture normal   { "res/object/PBR/normal.png" };
-		Texture metallic { "res/object/PBR/metal.png" };
-		Texture roughness{ "res/object/PBR/roughness.png" };
-		Texture ao       { "res/object/PBR/ao.png" };
 
+		// Textures //
+		//Texture albedo   { "res/object/PBR/albedo.png" };
+		//Texture normal   { "res/object/PBR/normal.png" };
+		//Texture metallic { "res/object/PBR/metal.png" };
+		//Texture roughness{ "res/object/PBR/roughness.png" };
+		//Texture ao       { "res/object/PBR/ao.png" };		
 
-		std::unique_ptr<VertexArray> m_VAO;
-		std::unique_ptr<IndexBuffer> m_IndexBuffer;
-		std::unique_ptr<Texture> m_Texture;
-		std::unique_ptr<VertexBuffer> m_VertexBuffer;
+		
+		Texture albedo   { "res/object/PBR/glazed_terran/Color.png" };
+		Texture normal   { "res/object/PBR/glazed_terran/NormalGL.png" };
+		Texture metallic { "res/object/PBR/glazed_terran/Displacement.png" };
+		Texture roughness{ "res/object/PBR/glazed_terran/Roughness.png" };
+
+		Texture copper_albedo   { "res/object/PBR/alu/basecolor.png" };
+		Texture copper_normal   { "res/object/PBR/alu/normal.png" };
+		Texture copper_metallic { "res/object/PBR/alu/metallic.png" };
+		Texture copper_roughness{ "res/object/PBR/alu/roughness.png" };
+		//Texture ao       { "res/object/PBR/glazed_terran/ao.png" };
+
 
 		float viewAngle = 60.0f;
 
@@ -51,5 +76,7 @@ namespace test {
 	private:
 		void InitController();
 		void UnRegisterController();
+		void initMap();
+		void renderQuad();
 	};
 }

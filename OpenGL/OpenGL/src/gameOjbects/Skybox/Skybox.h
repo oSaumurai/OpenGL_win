@@ -59,9 +59,9 @@ public:
 	Skybox(std::string filepath, bool = false);
 	~Skybox();
 
+	unsigned int m_RenderID;
 	void Draw(Shader& shader);
 private:
-	unsigned int m_RenderID;
 	std::unique_ptr<VertexArray> m_VAO;
 	std::unique_ptr<VertexBuffer> m_VBO;
 	std::unique_ptr<IndexBuffer> m_IndexBuffer;

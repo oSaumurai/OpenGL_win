@@ -47,7 +47,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <UseDebugLibraries>false</UseDebugLibraries>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <WholeProgramOptimization>true</WholeProgramOptimization>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
@@ -204,13 +204,17 @@
   <ItemGroup>
     <None Include="res\shader\Assimp.shader" />
     <None Include="res\shader\Basic.shader" />
+    <None Include="res\shader\BRDF.shader" />
     <None Include="res\shader\debug_quad.shader" />
     <None Include="res\shader\Grass.shader" />
     <None Include="res\shader\HDR\hdr.shader" />
+    <None Include="res\shader\irradiance.shader" />
     <None Include="res\shader\HDR\lighting.shader" />
     <None Include="res\shader\PBR.shader" />
+    <None Include="res\shader\pbr1.shader" />
     <None Include="res\shader\pointshadow.shader" />
     <None Include="res\shader\pointshadow_depth.shader" />
+    <None Include="res\shader\prefilter.shader" />
     <None Include="res\shader\shadowmap.shader" />
     <None Include="res\shader\skybox.shader" />
     <None Include="src\vendor\glm\detail\func_common.inl" />
