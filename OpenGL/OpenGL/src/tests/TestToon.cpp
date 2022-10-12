@@ -9,26 +9,36 @@
 namespace test {
 
     TestLoader::TestLoader()
-        :m_Translation(0, 0, 0), m_Rotation(0.0, 0.0, 0.0)
+        :m_Translation(0, 0, 0), m_Rotation(0.0, 0.0, 0.0),
+        m_Proj(glm::perspective(glm::radians(viewAngle), 1280.0f / 720.0f, 0.1f, 100.0f)),
+        m_View(glm::translate(glm::mat4(1.0f), glm::vec3(0, 0, -6.0f))),
+        m_shader("res/shader/Assimp.shader"),
+        skybox_shader("res/shader/skybox.shader"),
+        Grass_shader("res/shader/Grass.shader"),
+        debug_quad("res/shader/debug_quad.shader"),
+        DepthShader("res/shader/shadowmap_depth.shader"),
+        shadowMap_shader("res/shader/shadowmap.shader"),
+        light_Pos(glm::vec3(2.0, 9.0, 4.0))
     {        
         camera = new Camera(glm::vec3(0.0f, 0.0f, 5.0f));
-        alice = std::make_unique<Cube>();
-        plane = std::make_unique<Plane>();
-        sphere = std::make_unique<Sphere>();
-        quad_NDC = std::make_unique<Quad_NDC>();
-        skybox = std::make_unique<Skybox>("res/object/skybox");
         //model = std::make_unique<Model>("res/object/Tree1/Tree1.obj");
         //grass = std::make_unique<Grass>();
+        alice = std::make_unique<Cube>();
+        plane = std::make_unique<Plane>();
+        quad_NDC = std::make_unique<Quad_NDC>();
+        skybox = std::make_unique<Skybox>("res/object/skybox");
         //model = std::make_unique<Model>("res/object/beach/obj/scene.obj");
         //model = std::make_unique<Model>("res/object/scene/spacestation/Space Station Scene.blend");
         //model = std::make_unique<Model>("res/object/backpack/backpack.obj");
-        kouhai = std::make_unique<Model>("res/object/kouhai-chan/kouhai.obj");
+        //model = std::make_unique<Model>("res/object/kouhai-chan/kouhai.obj");
+
         keyboardController = KeyboardController::getInstance();
         InitController();
 
         GLCall(glBlendFunc(GL_SRC_ALPHA, GL_ONE_MINUS_SRC_ALPHA));
         GLCall(glEnable(GL_BLEND));
         GLCall(glEnable(GL_DEPTH_TEST));
+
 
         const unsigned int SHADOW_WIDTH = 1024, SHADOW_HEIGHT = 1024;
 
@@ -73,7 +83,7 @@ namespace test {
         m_shader.Bind();
         m_shader.SetUniformMat4f("u_MVP", mvp);
 
-        model = glm::translate(model, glm::vec3(2.0,2.0,2.0));
+        //model = glm::translate(model, glm::vec3(2.0,2.0,2.0));
         //glm::mat4 mvp1 = m_Proj * m_View * model;
         Grass_shader.Bind();
         Grass_shader.SetUniformMat4f("u_MVP", mvp);
@@ -92,8 +102,8 @@ namespace test {
         glDepthFunc(GL_LEQUAL);
         //skybox->Draw(skybox_shader);
         glDepthFunc(GL_LESS);
-        
-        
+        //model->Draw(m_shader);
+
         //shadow map
         debug_quad.Bind();
         debug_quad.SetUniform1i("depthMap", 0);
@@ -129,66 +139,25 @@ namespace test {
         glViewport(0, 0, 1280, 720);
         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 
-        // shadow map //
+        /////
         shadowMap_shader.Bind();
         shadowMap_shader.SetUniform1i("diffuseTexture", 0);
         shadowMap_shader.SetUniform1i("shadowMap", 1);
         shadowMap_shader.SetUniformMat4f("projection", m_Proj);
         shadowMap_shader.SetUniformMat4f("view", m_View);
-        shadowMap_shader.SetUniformMat4f("model", model);
+        // set light uniforms
         shadowMap_shader.SetUniformVec3("viewPos", camera->GetPosition());
         shadowMap_shader.SetUniformVec3("lightPos", light_Pos);
         shadowMap_shader.SetUniformMat4f("lightSpaceMatrix", lightSpaceMatrix);
 
+        shadowMap_shader.SetUniformMat4f("model", model);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, depthMap);
         plane->Draw(shadowMap_shader);
         glBindTexture(GL_TEXTURE_2D, 0);
 
-        kouhai->Draw(m_shader);
 
-        // PBR //
-
-
-
-        //PBR_shader.Bind();
-       /* PBR_shader.SetUniform1i("albedoMap", 0);
-        PBR_shader.SetUniform1i("normalMap", 1);
-        PBR_shader.SetUniform1i("metallicMap", 2);
-        PBR_shader.SetUniform1i("roughnessMap", 3);
-        PBR_shader.SetUniform1i("aoMap", 4);
-
-        PBR_shader.SetUniformMat4f("projection", m_Proj);
-        PBR_shader.SetUniformMat4f("view", m_View);
-        PBR_shader.SetUniformVec3("camPos", camera->GetPosition());*/
-
-      /*  albedo.Bind(0);
-        normal.Bind(1);
-        metallic.Bind(2);
-        roughness.Bind(3);
-        ao.Bind(4);*/
-
-        glm::vec3 lightPositions[] = {
-            glm::vec3(0.0f, 0.0f, 10.0f),
-        };
-        glm::vec3 lightColors[] = {
-            glm::vec3(150.0f, 150.0f, 150.0f),
-        };
-        for (unsigned int i = 0; i < sizeof(lightPositions) / sizeof(lightPositions[0]); ++i)
-        {
-            glm::vec3 newPos = lightPositions[i] + glm::vec3(sin(glfwGetTime() * 5.0) * 5.0, 0.0, 0.0);
-            newPos = lightPositions[i];
-            //PBR_shader.SetUniformVec3("lightPositions[" + std::to_string(i) + "]", newPos);
-            //PBR_shader.SetUniformVec3("lightColors[" + std::to_string(i) + "]", lightColors[i]);
-
-            model = glm::mat4(1.0f);
-            model = glm::translate(model, newPos);
-            model = glm::scale(model, glm::vec3(0.5f));
-            //PBR_shader.SetUniformMat4f("model", model);
-            //sphere->Draw(PBR_shader);
-        }
-
-        //RenderScene(shadowMap_shader);
+        RenderScene(shadowMap_shader);
 
         glDepthFunc(GL_LEQUAL);
         skybox->Draw(skybox_shader);
@@ -239,7 +208,7 @@ namespace test {
         alice->Draw(shader);
         glBindTexture(GL_TEXTURE_2D, 0);
 
-        model = glm::translate(model, glm::vec3(2.0, 2.5, 0.0));
+        model = glm::translate(model, glm::vec3(3.0, 3.0, 0.0));
         //glm::mat4 mvp = m_Proj * m_View * model;
         shader.SetUniformMat4f("model", model);
         glActiveTexture(GL_TEXTURE1);
@@ -247,14 +216,13 @@ namespace test {
         alice->Draw(shader);
         glBindTexture(GL_TEXTURE_2D, 0);
 
-        model = glm::translate(model, glm::vec3(-3.0, 3.0, -1.0));
+        model = glm::translate(model, glm::vec3(-3.0, 4.0, -1.0));
         //mvp = m_Proj * m_View * model;
         shader.SetUniformMat4f("model", model);
         glActiveTexture(GL_TEXTURE1);
         glBindTexture(GL_TEXTURE_2D, depthMap);
-        //sphere->Draw(shader);
+        alice->Draw(shader);
         glBindTexture(GL_TEXTURE_2D, 0);
-        //kouhai->Draw(shader);
 
         //glCullFace(GL_BACK);
     }

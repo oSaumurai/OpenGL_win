@@ -11,8 +11,8 @@
 
 #include "controller/Mouse_Controller.h"
 #include "controller/KeyboardController.h"
-const int HEIGHT = 1280;
-const int WIDTH = 720;
+const int HEIGHT = 1080;
+const int WIDTH = 1920;
 
 class Window
 {	

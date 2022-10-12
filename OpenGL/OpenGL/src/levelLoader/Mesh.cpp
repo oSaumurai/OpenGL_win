@@ -53,8 +53,10 @@ void Mesh::Draw(Shader& shader)
     renderer.Draw(*m_VAO, *m_IndexBuffer,shader);
     
     m_VAO->UnBind();
+    m_VertexBuffer->UnBind();
+    m_IndexBuffer->UnBind();
     //GLCall(glBindTexture(GL_TEXTURE_2D, 0));
-    glActiveTexture(GL_TEXTURE0);
+    //glActiveTexture(GL_TEXTURE0);
 }
 
 void Mesh::SetupMesh()

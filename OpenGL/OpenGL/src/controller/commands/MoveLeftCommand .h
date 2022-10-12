@@ -4,7 +4,7 @@
 class MoveLeftCommand : public ICommand
 {
 public:
-	MoveLeftCommand(Camera* Camera) {
+	MoveLeftCommand(Camera*& Camera) {
 		camera = Camera;
 	}
 

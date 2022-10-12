@@ -60,9 +60,6 @@
     <ClCompile Include="src\LevelLoader\LevelLoader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="src\Camera\Camera.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="src\controller\Mouse_Controller.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -136,6 +133,24 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="src\gameOjbects\Skybox\Skybox.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tests\TestPointShadow.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\camera\Camera.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\ray\Ray.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tests\TestHDR.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\gameOjbects\BlockObject\Sphere.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="src\tests\PBR_Test.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -554,6 +569,15 @@
     <None Include="res\shader\Grass.shader" />
     <None Include="res\shader\shadowmap.shader" />
     <None Include="res\shader\debug_quad.shader" />
+    <None Include="res\shader\pointshadow.shader" />
+    <None Include="res\shader\pointshadow_depth.shader" />
+    <None Include="res\shader\HDR\lighting.shader" />
+    <None Include="res\shader\HDR\hdr.shader" />
+    <None Include="res\shader\PBR.shader" />
+    <None Include="res\shader\irradiance.shader" />
+    <None Include="res\shader\prefilter.shader" />
+    <None Include="res\shader\BRDF.shader" />
+    <None Include="res\shader\pbr1.shader" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\vendor\stb_image\stb_image.h">
@@ -1447,9 +1471,6 @@
     <ClInclude Include="src\LevelLoader\LevelLoader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="src\Camera\Camera.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="src\controller\Mouse_Controller.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -1564,8 +1585,49 @@
     <ClInclude Include="src\gameOjbects\Skybox\Skybox.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="src\tests\TestPointShadow.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\controller\commands\ShadowmapSwitchCommand.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\camera\Camera.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ray\Ray.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tests\TestHDR.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\tests\PBR_Test.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="src\gameOjbects\BlockObject\Sphere.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Text Include="Todo.txt" />
+  </ItemGroup>
+  <ItemGroup>
+    <Image Include="res\object\skybox\hdri\back.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\object\skybox\hdri\bottom.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\object\skybox\hdri\front.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\object\skybox\hdri\left.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\object\skybox\hdri\right.png">
+      <Filter>Resource Files</Filter>
+    </Image>
+    <Image Include="res\object\skybox\hdri\top.png">
+      <Filter>Resource Files</Filter>
+    </Image>
   </ItemGroup>
 </Project>

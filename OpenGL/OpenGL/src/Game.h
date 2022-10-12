@@ -8,6 +8,10 @@
 #include "tests/TestTexture2D.h"
 #include "tests/TestTexture3D.h"
 #include "tests/TestLoader.h"
+#include "tests/TestPointShadow.h"
+#include "tests/TestHDR.h"
+#include "tests/PBR_Test.h"
+
 class Game :public Window
 {
 public:

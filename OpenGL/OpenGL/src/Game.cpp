@@ -36,7 +36,10 @@ void Game::initTestMember()
 	testMenu->RegisterTest<test::TestClearColor>("Clear Color");
 	testMenu->RegisterTest<test::TestTexture2D>("Texture 2D");
 	testMenu->RegisterTest<test::TestTexture3D>("Texture 3D");
-	testMenu->RegisterTest<test::TestLoader>("Scene loader");
+	testMenu->RegisterTest<test::TestLoader>("ShadowMapping");
+    testMenu->RegisterTest<test::TestPointShadow>("Point Shadow");
+    testMenu->RegisterTest<test::TestHDR>("HDR Test");
+    testMenu->RegisterTest<test::PBR_Test>("PBR Test");
 }
 
 void Game::LoadContent()
@@ -51,7 +54,7 @@ void Game::OnWindowUpdate()
 {
     mouseController->updateInput();
     keyboardController->updateInput();
-    GLCall(glClearColor(0.0f, 0.0f, 0.0f, 1.0f));
+    GLCall(glClearColor(0.2f, 0.3f, 0.3f, 1.0f));
     GLCall(glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT));
 }
 

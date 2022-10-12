@@ -6,3 +6,4 @@
 #include "MoveRightCommand.h"
 #include "MoveUpCommand.h"
 #include "ExitCommand.h"
+#include "ShadowmapSwitchCommand.h"

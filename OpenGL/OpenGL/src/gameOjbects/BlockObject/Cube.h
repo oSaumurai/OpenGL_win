@@ -100,6 +100,6 @@ public:
 	~Cube();
 	virtual void Update() override;
 private:
-    virtual void SetupMesh();
+    void SetupMesh() override;
 };
 

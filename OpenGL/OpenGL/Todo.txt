@@ -4,9 +4,10 @@ double to float cast
 Controller structure
 Controller abstraction + World abstraction
 
--shadow map
--render core topic
--complex shader&shader
+-shadow map £¨done£©
+-render core (done)
+-complex shader&shader 
+-toon shader
 -texture factories
 -ray
 -animation
@@ -16,7 +17,7 @@ Controller abstraction + World abstraction
 - Cook-Torrance BRDF
 - Irradiance mapping
 - Prefiltered environment maps + BRDFintegration map
-- Normal mapping (ez)
+- Normal mapping (done)
 - Skybox (simple one is done)
 - FXAA
 - Gamma Correction

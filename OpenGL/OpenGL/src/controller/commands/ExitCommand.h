@@ -5,7 +5,7 @@
 class ExitCommand : public ICommand
 {
 public:
-	ExitCommand(GLFWwindow* Window) {
+	ExitCommand(GLFWwindow*& Window) {
 		window = Window;
 	}
 
